@@ -8,9 +8,9 @@ const PORTFOLIO_CATEGORIES = [
     gradient: "linear-gradient(145deg, #2a1a38 0%, #120c18 100%)",
     span: "span-tall span-5",
     videos: [
-      { id: "m1", title: "Gnyana Padam", year: "2024", src: "videos/Gnyana padam grade fly brekadown.mp4" },
-      { id: "m2", title: "GNYANA PADAM Final", year: "2024", src: "videos/music-films/fINAL GNYANA PADAM.mp4" },
-      { id: "m3", title: "Final 1", year: "2024", src: "videos/music-films/final 1.mp4" },
+      { id: "m1", title: "Gnyana Padam", year: "2024", src: "https://www.youtube.com/embed/S-HUNgsKFgk" },
+      { id: "m2", title: "GNYANA PADAM Final", year: "2024", src: "https://www.youtube.com/embed/Cc4o2e1dO2I" },
+      { id: "m3", title: "Final 1", year: "2024", src: "https://www.youtube.com/embed/7Zo0dAcWRas" },
       { id: "m4", title: "Rava Naatho", year: "2024", src: "videos/music-films/Final Rava Naatho .mp4" },
       { id: "m5", title: "Moksham", year: "2023", src: "videos/music-films/Final_moksham_2.mp4" },
       { id: "m6", title: "Sanki 5", year: "2023", src: "videos/music-films/Sanki 5.mp4" }
