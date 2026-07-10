@@ -421,10 +421,14 @@
     .vo-body {
       flex: 1; display: flex; align-items: center; justify-content: center; position: relative;
     }
-    .vo-body video {
+    .vo-body video,
+    .vo-body iframe {
       width: 100%; max-width: 1200px; aspect-ratio: 16/9;
-      object-fit: cover; background: #000; border-radius: 12px;
+      object-fit: cover; background: #000; border-radius: 12px; border: none;
     }
+    .vo-body iframe { display: none; }
+    .vo-body iframe.active { display: block; }
+    .vo-body video.hidden { display: none; }
     .vo-nav {
       position: absolute; top: 50%; transform: translateY(-50%);
       width: 48px; height: 48px; border-radius: 50%;
@@ -601,7 +605,7 @@
           <h2 class="section-title">Let's build the next <em>cinematic story</em></h2>
           <p class="section-desc" style="margin-bottom:20px">Share your brief, timelines, and references. I handle production, edit, VFX, and grading end-to-end.</p>
           <div class="contact-links">
-            <a class="contact-link" href="mailto:hello@lrawogfx.com"><span class="ico">✉</span><span>hello@lrawogfx.com</span></a>
+            <a class="contact-link" href="mailto:lrawogfx@gmail.com"><span class="ico">✉</span><span>lrawogfx@gmail.com</span></a>
             <a class="contact-link" href="#" onclick="return false;"><span class="ico">◎</span><span>Instagram / @l_rawog_fx_studio</span></a>
             <a class="contact-link" href="#" onclick="return false;"><span class="ico">▶</span><span>YouTube / L_RAWOG_FX_STUDIO</span></a>
           </div>
@@ -631,6 +635,7 @@
     <div class="vo-body">
       <button type="button" class="vo-nav vo-prev" id="voPrev" aria-label="Previous film">‹</button>
       <video id="voVideo" controls playsinline></video>
+      <iframe id="voYoutube" title="Film player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       <button type="button" class="vo-nav vo-next" id="voNext" aria-label="Next film">›</button>
     </div>
   </div>
@@ -830,24 +835,56 @@
     /* ── VIDEO OVERLAY ── */
     const overlay = document.getElementById("videoOverlay");
     const voVideo = document.getElementById("voVideo");
+    const voYoutube = document.getElementById("voYoutube");
     const voTitle = document.getElementById("voTitle");
     let currentVidId = null;
+
+    function toYoutubeEmbed(url) {
+      if (!url) return null;
+      const short = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+      if (short) return `https://www.youtube.com/embed/${short[1]}?autoplay=1&rel=0`;
+      const watch = url.match(/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/);
+      if (watch) return `https://www.youtube.com/embed/${watch[1]}?autoplay=1&rel=0`;
+      if (url.includes("youtube.com/embed/")) {
+        return url.includes("?") ? `${url}&autoplay=1&rel=0` : `${url}?autoplay=1&rel=0`;
+      }
+      return null;
+    }
+
+    function isYoutubeSrc(url) {
+      return !!(url && (url.includes("youtube.com") || url.includes("youtu.be")));
+    }
 
     function openVideoOverlay(vidId, title) {
       const src = videoMap[vidId];
       if (!src) return;
       currentVidId = vidId;
       voTitle.textContent = title;
-      voVideo.src = src;
+      const embed = toYoutubeEmbed(src);
+      if (embed) {
+        voVideo.classList.add("hidden");
+        voVideo.pause();
+        voVideo.removeAttribute("src");
+        voYoutube.src = embed;
+        voYoutube.classList.add("active");
+      } else {
+        voYoutube.classList.remove("active");
+        voYoutube.removeAttribute("src");
+        voVideo.classList.remove("hidden");
+        voVideo.src = src;
+        voVideo.play().catch(() => {});
+      }
       overlay.classList.remove("hidden");
       overlay.setAttribute("aria-hidden", "false");
       document.body.classList.add("dg-scroll-lock");
-      voVideo.play().catch(() => {});
     }
 
     function closeVideoOverlay() {
       voVideo.pause();
       voVideo.removeAttribute("src");
+      voVideo.classList.remove("hidden");
+      voYoutube.removeAttribute("src");
+      voYoutube.classList.remove("active");
       overlay.classList.add("hidden");
       overlay.setAttribute("aria-hidden", "true");
       document.body.classList.remove("dg-scroll-lock");
@@ -879,6 +916,9 @@
       videoMap[currentVidId] = url;
       const v = videoList.find(x => x.id === currentVidId);
       if (v) v.src = url;
+      voYoutube.classList.remove("active");
+      voYoutube.removeAttribute("src");
+      voVideo.classList.remove("hidden");
       voVideo.src = url;
       voVideo.play().catch(() => {});
       e.target.value = "";
