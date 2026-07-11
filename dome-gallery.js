@@ -42,6 +42,9 @@
       this.lastDragEnd = 0;
       this.focusedEl = null;
       this.opening = false;
+      this.autoSpeed = 0.08; // deg per frame — slow continuous spin
+      this.rafId = null;
+      this.reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       this.main = root.querySelector(".sphere-main");
       this.sphere = root.querySelector(".sphere");
@@ -54,6 +57,7 @@
       this.render();
       this.bindDrag();
       this.bindResize();
+      this.startAutoRotate();
       this.scrim.addEventListener("click", () => this.closeEnlarge());
       window.addEventListener("keydown", e => { if (e.key === "Escape") this.closeEnlarge(); });
     }
@@ -86,7 +90,7 @@
         const face = document.createElement("div");
         face.className = "item__image";
         if (it.src) {
-          face.innerHTML = `<img src="${it.src}" alt="${it.alt}">`;
+          face.innerHTML = `<img src="${it.src}" alt="" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#2a2030,#161018)'">`;
         } else {
           face.innerHTML = `<div style="width:100%;height:100%;background:${this.gradients(i)}"></div>`;
         }
@@ -99,6 +103,18 @@
 
     applyTransform(xDeg, yDeg) {
       this.sphere.style.transform = `translateZ(calc(var(--radius) * -1)) rotateX(${xDeg}deg) rotateY(${yDeg}deg)`;
+    }
+
+    startAutoRotate() {
+      if (this.reduceMotion) return;
+      const tick = () => {
+        if (!this.dragging && !this.focusedEl) {
+          this.rotation.y = wrapAngleSigned(this.rotation.y + this.autoSpeed);
+          this.applyTransform(this.rotation.x, this.rotation.y);
+        }
+        this.rafId = requestAnimationFrame(tick);
+      };
+      this.rafId = requestAnimationFrame(tick);
     }
 
     bindResize() {

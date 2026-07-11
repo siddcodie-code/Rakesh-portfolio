@@ -62,15 +62,24 @@
     /* nav */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px clamp(20px, 4vw, 48px);
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: 10px clamp(20px, 4vw, 48px) 16px;
       background: linear-gradient(to bottom, rgba(10,9,9,.9), transparent);
     }
-    nav .logo img { height: clamp(52px, 6vw, 78px); width: auto; transform: translateY(-2px); }
+    nav .logo {
+      display: flex; align-items: flex-start; line-height: 0;
+      margin-top: -6px;
+    }
+    nav .logo img {
+      height: clamp(72px, 9vw, 110px); width: auto;
+      object-fit: contain; object-position: top left;
+      filter: drop-shadow(0 4px 18px rgba(0,0,0,.55));
+    }
     .nav-pills {
       display: flex; gap: 4px; padding: 4px;
       border-radius: 999px; border: 1px solid rgba(255,255,255,.08);
       background: rgba(255,255,255,.03);
+      margin-top: 6px;
     }
     .nav-pill {
       font-family: "Space Mono", monospace; font-size: 10px; letter-spacing: .18em;
@@ -87,13 +96,19 @@
       text-transform: uppercase; color: var(--muted);
       padding: 10px 16px; border-radius: 999px;
       border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.03);
+      margin-top: 6px;
     }
 
     .page { position: relative; min-height: 100vh; min-height: 100dvh; }
 
     /* hero */
-    #hero { height: 100vh; height: 100dvh; overflow: hidden; }
-    #hero video { width: 100%; height: 100%; object-fit: cover; }
+    #hero { height: 100vh; height: 100dvh; overflow: hidden; position: relative; background: #000; }
+    #hero .hero-frame { position: absolute; inset: 0; overflow: hidden; }
+    #hero iframe {
+      position: absolute; top: 50%; left: 50%;
+      width: 100vw; height: 56.25vw; min-height: 100%; min-width: 177.78vh;
+      transform: translate(-50%, -50%); border: 0; pointer-events: none;
+    }
 
     /* profile */
     #page-profile { padding: 100px clamp(20px, 5vw, 56px) 80px; }
@@ -138,7 +153,7 @@
     .stat .n { font-family: "DM Serif Display", serif; font-size: 2rem; color: var(--peach); }
     .stat .l { font-family: "Space Mono", monospace; font-size: 9px; letter-spacing: .16em; color: var(--muted); margin-top: 6px; text-transform: uppercase; }
 
-    .expertise-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 72px; }
+    .expertise-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 72px; }
     .exp-card { padding: 24px 20px; min-height: 180px; position: relative; overflow: hidden; }
     .exp-card::after {
       content: ""; position: absolute; inset: 0;
@@ -148,7 +163,7 @@
     }
     .exp-card:hover::after { opacity: 1; }
     .exp-card .num { font-family: "Space Mono", monospace; font-size: 10px; color: var(--peach); letter-spacing: .14em; }
-    .exp-card h3 { margin-top: 14px; font-size: 1.15rem; font-weight: 500; }
+    .exp-card h3 { margin-top: 14px; font-size: clamp(1.2rem, 2vw, 1.45rem); font-weight: 500; }
     .exp-card p { margin-top: 10px; font-size: 14px; color: var(--muted); line-height: 1.7; }
 
     .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 72px; }
@@ -224,7 +239,7 @@
       --radius: 420px; --segments-x: 22; --segments-y: 22;
       --overlay-blur-color: #0a0909;
       --tile-radius: 18px; --enlarge-radius: 24px;
-      --image-filter: grayscale(1);
+      --image-filter: contrast(1.05) saturate(1.05);
       --circ: calc(var(--radius) * 3.14);
       --rot-y: calc((360deg / var(--segments-x)) / 2);
       --rot-x: calc((360deg / var(--segments-y)) / 2);
@@ -325,7 +340,8 @@
     .panel {
       flex: 1 1 0; min-width: 0; position: relative; overflow: hidden;
       border-radius: 18px; cursor: none;
-      transition: flex 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+      border: 1px solid rgba(255,255,255,.12);
+      transition: flex 0.6s cubic-bezier(0.76, 0, 0.24, 1), box-shadow .4s ease, border-color .4s ease;
       background: var(--grad, var(--card));
     }
     .panel::before {
@@ -333,7 +349,7 @@
       background: var(--grad); pointer-events: none;
     }
     .panel.is-expanded { flex: 5.5 1 0; box-shadow: 0 22px 60px rgba(0,0,0,.85); }
-    .panel.is-slim { flex: 0.55 1 0; }
+    .panel.is-slim { flex: 0.42 1 0; }
     .panel:hover:not(.is-expanded) { box-shadow: inset 0 0 40px rgba(255,255,255,.04); }
 
     .panel-slim {
@@ -343,13 +359,15 @@
     }
     .panel.is-expanded .panel-slim { opacity: 0; pointer-events: none; }
     .panel-num {
-      font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: .2em;
-      color: var(--accent); writing-mode: vertical-rl; transform: rotate(180deg);
+      font-family: "DM Sans", sans-serif; font-size: clamp(12px, 1.2vw, 15px); letter-spacing: .28em;
+      color: var(--accent); writing-mode: vertical-rl; transform: rotate(180deg); font-weight: 500;
+      opacity: .85;
     }
     .panel-label {
-      font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: .28em;
-      text-transform: uppercase; color: var(--cream);
+      font-family: "DM Serif Display", serif; font-size: clamp(18px, 2.1vw, 28px); letter-spacing: .04em;
+      font-style: italic; text-transform: none; color: var(--cream); font-weight: 400;
       writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap;
+      text-shadow: 0 2px 18px rgba(0,0,0,.45);
     }
 
     .panel-body {
@@ -363,13 +381,14 @@
       text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
     }
     .panel-title {
-      font-family: "DM Serif Display", serif;
-      font-size: clamp(2rem, 4vw, 52px); line-height: 1.05; margin-bottom: 24px;
+      font-family: "DM Serif Display", serif; font-style: italic;
+      font-size: clamp(2.4rem, 5vw, 58px); line-height: 1.05; margin-bottom: 24px;
+      font-weight: 400; letter-spacing: -.01em;
     }
-    .film-rows { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+    .film-rows { flex: 1; overflow-y: auto; display: flex; flex-direction: column; padding-right: 4px; }
     .film-row {
-      display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 16px;
-      padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.12);
+      display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 14px;
+      padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.12);
       cursor: none; transition: .2s;
     }
     .film-row:hover { padding-left: 8px; color: var(--peach); }
@@ -378,7 +397,7 @@
       border: 1px solid rgba(255,255,255,.25); display: grid; place-items: center;
       font-size: 10px; color: var(--cream); flex-shrink: 0;
     }
-    .film-row .film-name { font-size: 15px; }
+    .film-row .film-name { font-size: clamp(15px, 1.4vw, 17px); font-weight: 500; letter-spacing: .01em; }
     .film-row .film-year {
       font-family: "Space Mono", monospace; font-size: 11px; color: var(--muted); letter-spacing: .1em;
     }
@@ -420,14 +439,21 @@
     }
     .vo-body {
       flex: 1; display: flex; align-items: center; justify-content: center; position: relative;
+      min-height: 0; padding: 0 clamp(8px, 2vw, 24px);
     }
     .vo-body video,
     .vo-body iframe {
-      width: 100%; max-width: 1200px; aspect-ratio: 16/9;
-      object-fit: cover; background: #000; border-radius: 12px; border: none;
+      width: min(1200px, 96vw); max-height: calc(100vh - 140px);
+      aspect-ratio: 16/9; height: auto;
+      background: #000; border-radius: 14px; border: none;
+      box-shadow: 0 24px 80px rgba(0,0,0,.65);
     }
     .vo-body iframe { display: none; }
     .vo-body iframe.active { display: block; }
+    .vo-body iframe.reel-frame {
+      width: min(400px, 72vw); aspect-ratio: 9/16;
+      max-height: min(78vh, calc(100vh - 140px)); height: auto;
+    }
     .vo-body video.hidden { display: none; }
     .vo-nav {
       position: absolute; top: 50%; transform: translateY(-50%);
@@ -464,6 +490,7 @@
     }
     @media (max-width: 600px) {
       .expertise-grid, .services-grid { grid-template-columns: 1fr; }
+      .panel-strip { gap: 6px; }
     }
   </style>
 </head>
@@ -473,7 +500,7 @@
   <div id="cursor-label">PLAY</div>
 
   <nav>
-    <a class="logo" href="#hero"><img src="videos/logo/1-L_rawog_fx-logo (1).png" alt="L_RAWOG_FX"></a>
+    <a class="logo" href="#hero"><img src="images/logo.png" alt="L_RAWOG_FX Studio"></a>
     <div class="nav-pills">
       <a class="nav-pill active" href="#hero" data-page="home">Home</a>
       <a class="nav-pill" href="#page-profile" data-page="profile">Profile</a>
@@ -485,7 +512,15 @@
   <main>
   <!-- PAGE 1: HERO -->
   <section class="page" id="hero">
-    <video id="heroVideo" src="videos/Gnyana padam grade fly brekadown.mp4" muted loop autoplay playsinline preload="auto"></video>
+    <div class="hero-frame">
+      <iframe
+        id="heroYoutube"
+        src="https://www.youtube.com/embed/0-q3Kj_IOfY?autoplay=1&mute=1&loop=1&playlist=0-q3Kj_IOfY&controls=0&rel=0&playsinline=1&modestbranding=1"
+        title="Hero reel"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
   </section>
 
   <!-- PAGE 2: PROFILE -->
@@ -493,7 +528,7 @@
     <div class="wrap">
       <div class="about-block reveal">
         <div class="about-photo glass">
-          <img src="videos/music-films/image.png" alt="Rakesh Dontula" onerror="this.src='videos/image.png'">
+          <img id="profilePhoto" src="" alt="Rakesh Dontula" onerror="this.src='videos/image.png'">
         </div>
         <div class="about-copy glass" style="padding:24px">
           <span class="section-label">About Me</span>
@@ -516,9 +551,8 @@
         <p class="section-desc" style="margin-bottom:24px">From behind the lens to inside the edit suite — every frame is a deliberate creative decision.</p>
         <div class="expertise-grid">
           <article class="exp-card glass"><span class="num">01</span><h3>Director of Photography</h3><p>Visual storytelling, shot composition, and mood-centric scene design.</p></article>
-          <article class="exp-card glass"><span class="num">02</span><h3>Professional Cinematography</h3><p>Lens language, camera movement, and premium on-set execution.</p></article>
-          <article class="exp-card glass"><span class="num">03</span><h3>Video Editing</h3><p>Rhythm-first cutting and emotional pacing for music and branded films.</p></article>
-          <article class="exp-card glass"><span class="num">04</span><h3>Color Grading</h3><p>Cinematic palettes and contrast sculpting with a strong final polish.</p></article>
+          <article class="exp-card glass"><span class="num">02</span><h3>Video Editing</h3><p>Rhythm-first cutting and emotional pacing for music and branded films.</p></article>
+          <article class="exp-card glass"><span class="num">03</span><h3>DI</h3><p>Cinematic palettes, contrast sculpting, and distribution-ready final polish.</p></article>
         </div>
       </div>
 
@@ -606,7 +640,7 @@
           <p class="section-desc" style="margin-bottom:20px">Share your brief, timelines, and references. I handle production, edit, VFX, and grading end-to-end.</p>
           <div class="contact-links">
             <a class="contact-link" href="mailto:lrawogfx@gmail.com"><span class="ico">✉</span><span>lrawogfx@gmail.com</span></a>
-            <a class="contact-link" href="#" onclick="return false;"><span class="ico">◎</span><span>Instagram / @l_rawog_fx_studio</span></a>
+            <a class="contact-link" href="https://www.instagram.com/l_rawog_fx?igsh=MW80cmxwaXlmaTZlaQ==" target="_blank" rel="noopener noreferrer"><span class="ico">◎</span><span>Instagram / @l_rawog_fx</span></a>
             <a class="contact-link" href="#" onclick="return false;"><span class="ico">▶</span><span>YouTube / L_RAWOG_FX_STUDIO</span></a>
           </div>
         </div>
@@ -851,8 +885,16 @@
       return null;
     }
 
-    function isYoutubeSrc(url) {
-      return !!(url && (url.includes("youtube.com") || url.includes("youtu.be")));
+    function toInstagramEmbed(url) {
+      if (!url) return null;
+      const match = url.match(/instagram\.com\/(?:reel|p)\/([A-Za-z0-9_-]+)/);
+      if (!match) return null;
+      const type = url.includes("/reel/") ? "reel" : "p";
+      return `https://www.instagram.com/${type}/${match[1]}/embed`;
+    }
+
+    function toEmbedUrl(url) {
+      return toYoutubeEmbed(url) || toInstagramEmbed(url);
     }
 
     function openVideoOverlay(vidId, title) {
@@ -860,13 +902,15 @@
       if (!src) return;
       currentVidId = vidId;
       voTitle.textContent = title;
-      const embed = toYoutubeEmbed(src);
+      const embed = toEmbedUrl(src);
+      voYoutube.classList.remove("reel-frame");
       if (embed) {
         voVideo.classList.add("hidden");
         voVideo.pause();
         voVideo.removeAttribute("src");
         voYoutube.src = embed;
         voYoutube.classList.add("active");
+        if (src.includes("instagram.com")) voYoutube.classList.add("reel-frame");
       } else {
         voYoutube.classList.remove("active");
         voYoutube.removeAttribute("src");
@@ -884,7 +928,7 @@
       voVideo.removeAttribute("src");
       voVideo.classList.remove("hidden");
       voYoutube.removeAttribute("src");
-      voYoutube.classList.remove("active");
+      voYoutube.classList.remove("active", "reel-frame");
       overlay.classList.add("hidden");
       overlay.setAttribute("aria-hidden", "true");
       document.body.classList.remove("dg-scroll-lock");
@@ -916,7 +960,7 @@
       videoMap[currentVidId] = url;
       const v = videoList.find(x => x.id === currentVidId);
       if (v) v.src = url;
-      voYoutube.classList.remove("active");
+      voYoutube.classList.remove("active", "reel-frame");
       voYoutube.removeAttribute("src");
       voVideo.classList.remove("hidden");
       voVideo.src = url;
@@ -926,7 +970,9 @@
 
     /* ── DOME GALLERY ── */
     renderPanels();
-    initDomeGallery("domeGallery", GALLERY_PHOTOS);
+    const profileImg = document.getElementById("profilePhoto");
+    if (profileImg) profileImg.src = mediaSrc(PROFILE_PHOTO);
+    initDomeGallery("domeGallery", GALLERY_PHOTOS.map(p => ({ ...p, src: mediaSrc(p.src) })));
     updateNav();
   </script>
 </body>
