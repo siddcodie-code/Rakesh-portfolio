@@ -101,15 +101,23 @@
 
     .page { position: relative; min-height: 100vh; min-height: 100dvh; }
 
-    /* hero — Google Drive embed */
+    /* hero — local web video with sound */
     #hero { height: 100vh; height: 100dvh; overflow: hidden; position: relative; background: #000; }
     #hero .hero-frame { position: absolute; inset: 0; overflow: hidden; }
-    #hero iframe {
+    #hero video {
       position: absolute; top: 50%; left: 50%;
       width: 100vw; height: 56.25vw; min-height: 100%; min-width: 177.78vh;
-      transform: translate(-50%, -50%) scale(1.35);
-      border: 0; pointer-events: auto;
+      transform: translate(-50%, -50%); border: 0; object-fit: cover;
+      pointer-events: none;
     }
+    #heroMute {
+      position: absolute; right: clamp(16px, 3vw, 28px); bottom: clamp(20px, 4vw, 36px);
+      z-index: 5; width: 48px; height: 48px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.25); background: rgba(0,0,0,.45);
+      color: var(--cream); font-size: 18px; backdrop-filter: blur(8px);
+      display: grid; place-items: center; transition: border-color .2s, background .2s;
+    }
+    #heroMute:hover { border-color: var(--peach); background: rgba(0,0,0,.65); }
 
     /* profile */
     #page-profile { padding: 100px clamp(20px, 5vw, 56px) 80px; }
@@ -507,13 +515,15 @@
   <!-- PAGE 1: HERO -->
   <section class="page" id="hero">
     <div class="hero-frame">
-      <iframe
-        id="heroDrive"
-        src="https://drive.google.com/file/d/1goHUAtc9N7O8DjhVwe0GApNaTmIxv6hW/preview"
-        title="Final Moksham Teaser"
-        allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-        allowfullscreen
-      ></iframe>
+      <video
+        id="heroVideo"
+        src="videos/Final_moksham_teaser_web.mp4"
+        autoplay
+        playsinline
+        loop
+        preload="auto"
+      ></video>
+      <button type="button" id="heroMute" aria-label="Mute homepage video" title="Mute / Unmute">🔊</button>
     </div>
   </section>
 
@@ -863,6 +873,7 @@
       overlay.classList.remove("hidden");
       overlay.setAttribute("aria-hidden", "false");
       document.body.classList.add("dg-scroll-lock");
+      if (heroVideo) heroVideo.pause();
     }
 
     function closeVideoOverlay() {
@@ -872,6 +883,7 @@
       overlay.setAttribute("aria-hidden", "true");
       document.body.classList.remove("dg-scroll-lock");
       currentVidId = null;
+      if (heroVideo) heroVideo.play().catch(() => {});
     }
 
     function playFilmAt(index) {
@@ -892,12 +904,44 @@
       if (e.key === "ArrowRight") playFilmAt(currentFilmIndex + 1);
     });
 
-    /* ── HERO GOOGLE DRIVE VIDEO ── */
-    const heroDrive = document.getElementById("heroDrive");
-    if (heroDrive && typeof HERO_VIDEO === "string" && HERO_VIDEO.includes("drive.google.com")) {
-      heroDrive.src = HERO_VIDEO.includes("/preview")
-        ? HERO_VIDEO
-        : HERO_VIDEO.replace(/\/view.*/, "/preview").replace(/\/edit.*/, "/preview");
+    /* ── HERO LOCAL VIDEO (sound on + mute toggle) ── */
+    const heroVideo = document.getElementById("heroVideo");
+    const heroMute = document.getElementById("heroMute");
+    if (heroVideo) {
+      heroVideo.src = mediaSrc(HERO_VIDEO);
+      heroVideo.muted = false;
+      heroVideo.volume = 1;
+      heroVideo.removeAttribute("controls");
+
+      const syncMuteBtn = () => {
+        if (!heroMute) return;
+        heroMute.textContent = heroVideo.muted ? "🔇" : "🔊";
+        heroMute.setAttribute("aria-label", heroVideo.muted ? "Unmute homepage video" : "Mute homepage video");
+      };
+
+      const playHero = () => heroVideo.play().catch(() => {});
+
+      playHero();
+      syncMuteBtn();
+
+      if (heroMute) {
+        heroMute.addEventListener("click", e => {
+          e.stopPropagation();
+          heroVideo.muted = !heroVideo.muted;
+          if (!heroVideo.muted) playHero();
+          syncMuteBtn();
+        });
+      }
+
+      const unlock = () => {
+        if (!heroVideo.muted) playHero();
+        window.removeEventListener("pointerdown", unlock);
+        window.removeEventListener("keydown", unlock);
+        window.removeEventListener("touchstart", unlock);
+      };
+      window.addEventListener("pointerdown", unlock, { once: true });
+      window.addEventListener("keydown", unlock, { once: true });
+      window.addEventListener("touchstart", unlock, { once: true });
     }
 
     /* ── DOME GALLERY ── */

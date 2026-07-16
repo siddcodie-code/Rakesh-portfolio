@@ -9,7 +9,7 @@ const PORTFOLIO_CATEGORIES = [
     gradient: "linear-gradient(145deg, #2a1a38 0%, #120c18 100%)",
     videos: [
       { id: "bm1", title: "Aisich Hun Breakdown", year: "2024", youtubeId: "XcScFmhHKWA", isShort: false },
-      { id: "bm2", title: "Gnyana Padama Timeline Breakdown", year: "2024", youtubeId: "PJVGfCPFdI", isShort: false },
+      { id: "bm2", title: "Gnyana Padama Timeline Breakdown", year: "2024", youtubeId: "-PJVGfCPFdI", isShort: false },
       { id: "bm3", title: "NENINTHE Formula Breakdown", year: "2024", youtubeId: "oPyM6Gqmh0c", isShort: true },
       { id: "bm4", title: "NENINTHE GARUDA PURANAM Breakdown", year: "2024", youtubeId: "hA38mD7NIEg", isShort: true }
     ]
@@ -82,7 +82,7 @@ const PORTFOLIO_CATEGORIES = [
 
 
 
-const HERO_VIDEO = "https://drive.google.com/file/d/1goHUAtc9N7O8DjhVwe0GApNaTmIxv6hW/preview";
+const HERO_VIDEO = "videos/Final_moksham_teaser_web.mp4";
 
 const LOGO_SRC = "images/logo.png";
 
