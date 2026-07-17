@@ -2,29 +2,21 @@
 
 const PORTFOLIO_CATEGORIES = [
   {
-    id: "breakdown",
-    title: "Breakdown",
-    subtitle: "Process × Light × Craft",
-    accent: "#c8b8f0",
-    gradient: "linear-gradient(145deg, #2a1a38 0%, #120c18 100%)",
-    videos: [
-      { id: "bd1", title: "Aisich Hun Breakdown", year: "2024", youtubeId: "XcScFmhHKWA", isShort: false },
-      { id: "bd2", title: "Gnyana Padama Timeline Breakdown", year: "2024", youtubeId: "-PJVGfCPFdI", isShort: false }
-    ]
-  },
-  {
     id: "music",
     title: "Music Films",
     subtitle: "Narrative × Mood × Rhythm",
     accent: "#d4a8e8",
     gradient: "linear-gradient(145deg, #281838 0%, #100818 100%)",
     videos: [
-      { id: "mf1", title: "We Are Livin' The Dream", year: "2024", youtubeId: "NSalYzMR4Iw", isShort: false },
-      { id: "mf2", title: "AISICH HU", year: "2024", youtubeId: "9ezQw9-wvqw", isShort: false },
-      { id: "mf3", title: "Calory 🚀🎧", year: "2024", instagramId: "DZaolNWREHC", isShort: true },
-      { id: "mf4", title: "Antha Anukunna", year: "2024", youtubeId: "q_KzCmJqfV0", isShort: false },
-      { id: "mf5", title: "EE ROJU ANTU", year: "2024", youtubeId: "rhZXcDwTtR0", isShort: false },
-      { id: "mf6", title: "Gaanjaayinichillu", year: "2024", instagramId: "DZxq40Kta6D", isShort: true }
+      { id: "mf1", title: "AAKHARI PRAYANAM", year: "2024", youtubeId: "S-HUNgsKFgk", isShort: false },
+      { id: "mf2", title: "Raava Naatho", year: "2024", youtubeId: "7Zo0dAcWRas", isShort: false },
+      { id: "mf3", title: "StreetViolater", year: "2024", youtubeId: "gs4qOBaCyzs", isShort: false },
+      { id: "mf4", title: "BadVibesssss", year: "2024", youtubeId: "fKtwEqhca04", isShort: false },
+      { id: "mf5", title: "Antha Anukunna", year: "2024", youtubeId: "q_KzCmJqfV0", isShort: false },
+      { id: "mf6", title: "AISICH HU", year: "2024", youtubeId: "9ezQw9-wvqw", isShort: false },
+      { id: "mf7", title: "Calory 🚀🎧", year: "2024", instagramId: "DZaolNWREHC", isShort: true },
+      { id: "mf8", title: "EE ROJU ANTU", year: "2024", youtubeId: "rhZXcDwTtR0", isShort: false },
+      { id: "mf9", title: "Gaanjaayinichillu", year: "2024", instagramId: "DZxq40Kta6D", isShort: true }
     ]
   },
   {
@@ -115,14 +107,27 @@ const PORTFOLIO_CATEGORIES = [
       { id: "ad10", title: "Ugly Human 4", year: "2024", youtubeId: "VTIiqs9r0-c", isShort: true },
       { id: "ad11", title: "Ugly Human 5", year: "2024", youtubeId: "JkpQAjkrSsc", isShort: true }
     ]
+  },
+  {
+    id: "breakdown",
+    title: "Breakdown",
+    subtitle: "Process × Light × Craft",
+    accent: "#c8b8f0",
+    gradient: "linear-gradient(145deg, #2a1a38 0%, #120c18 100%)",
+    videos: [
+      { id: "bd1", title: "Aisich Hun Breakdown", year: "2024", youtubeId: "XcScFmhHKWA", isShort: false },
+      { id: "bd2", title: "Gnyana Padama Timeline Breakdown", year: "2024", youtubeId: "-PJVGfCPFdI", isShort: false },
+      { id: "bd3", title: "GODZILLA MUMBAI Breakdown", year: "2024", youtubeId: "wcxxVI8lFWI", isShort: false }
+    ]
   }
 ];
 
 const HERO_VIDEO = "videos/hero_teaser.mp4";
 const LOGO_SRC = "images/logo.png";
 const PROFILE_PHOTO = "images/About-me/Aboutme.webp";
-const COLLAB_PHOTO = "images/About-me/Aboutme-removebg-preview.png";
+const COLLAB_PHOTO = "images/About-me/fotter.png";
 const INSTAGRAM_URL = "https://www.instagram.com/l_rawog_fx_studio/";
+const CONTACT_PHONES = ["8446644093", "9284707820"];
 
 const GALLERY_PHOTOS = [
   { src: "images/gallery-01.jpg", alt: "Fashion portrait" },

@@ -142,16 +142,16 @@
     .section-title em { font-style: italic; color: var(--peach); }
     .section-desc { color: var(--muted); line-height: 1.8; max-width: 560px; }
     .about-block {
-      margin-bottom: 72px;
-      display: grid; grid-template-columns: 1fr 1.15fr; gap: 24px; align-items: stretch;
+      margin-bottom: 40px;
+      display: grid; grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: start;
     }
     .about-photo {
-      border-radius: 18px; overflow: hidden; min-height: 520px;
+      border-radius: 18px; overflow: hidden; min-height: 0; aspect-ratio: 3/4; max-height: 420px;
       border: 1px solid rgba(255,255,255,.1);
     }
-    .about-photo img { width: 100%; height: 100%; object-fit: cover; }
-    .about-copy { padding: 24px; }
-    .about-block p { color: var(--muted); line-height: 1.85; margin-top: 14px; max-width: 720px; }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .about-copy { padding: 18px 20px; }
+    .about-block p { color: var(--muted); line-height: 1.7; margin-top: 10px; max-width: 720px; font-size: 15px; }
     .about-block p strong { color: var(--cream); font-weight: 500; }
 
     .glass {
@@ -239,18 +239,16 @@
     }
     .collab-photo {
       position: relative; z-index: 2;
-      width: clamp(200px, 26vw, 320px);
-      filter: grayscale(1) contrast(1.08);
+      width: clamp(260px, 34vw, 430px);
+      filter: none;
       pointer-events: none; justify-self: center;
     }
     .collab-photo img {
       display: block; width: 100%; height: auto;
       object-fit: contain; object-position: center bottom;
-      -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
-      mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
     }
     .collab-left {
-      display: grid; gap: 18px; padding-bottom: 8px;
+      display: grid; gap: 14px; padding-bottom: 8px;
       position: relative; z-index: 5; align-self: end; pointer-events: auto;
     }
     .collab-label {
@@ -295,26 +293,25 @@
     /* dome gallery */
     #photos { margin-bottom: 72px; }
     .dome-wrap {
-      margin-top: 24px; height: min(72vh, 640px); min-height: 420px;
+      margin-top: 24px; height: min(82vh, 760px); min-height: 520px;
       border-radius: 24px; overflow: hidden; position: relative;
       background: radial-gradient(ellipse at center, #1a1520 0%, var(--bg) 70%);
     }
-    .gallery-nav {
-      position: absolute; inset: 0; z-index: 12; pointer-events: none;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 clamp(12px, 2vw, 20px);
-    }
-    .gallery-nav button {
-      pointer-events: auto; width: 48px; height: 48px; border-radius: 50%;
-      border: 1px solid rgba(255,255,255,.22); background: rgba(0,0,0,.45);
+    .sphere-root .photo-caption { display: none !important; }
+    .sphere-root .enlarge-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 42px; height: 42px; border-radius: 50%; z-index: 40;
+      border: 1px solid rgba(255,255,255,.25); background: rgba(0,0,0,.55);
       color: var(--cream); font-size: 22px; line-height: 1;
-      backdrop-filter: blur(8px); transition: border-color .2s, background .2s, color .2s;
-      display: grid; place-items: center;
+      display: grid; place-items: center; pointer-events: auto;
+      transition: border-color .2s, color .2s, background .2s;
     }
-    .gallery-nav button:hover { border-color: var(--peach); color: var(--peach); background: rgba(0,0,0,.7); }
+    .sphere-root .enlarge-nav:hover { border-color: var(--peach); color: var(--peach); background: rgba(0,0,0,.75); }
+    .sphere-root .enlarge-nav.prev { left: 10px; }
+    .sphere-root .enlarge-nav.next { right: 10px; }
     .sphere-root {
       position: relative; width: 100%; height: 100%;
-      --radius: 420px; --segments-x: 22; --segments-y: 22;
+      --radius: 520px; --segments-x: 22; --segments-y: 22;
       --overlay-blur-color: #0a0909;
       --tile-radius: 18px; --enlarge-radius: 24px;
       --image-filter: contrast(1.05) saturate(1.05);
@@ -356,7 +353,7 @@
         translateZ(var(--radius));
     }
     .sphere-root .item__image {
-      position: absolute; display: block; inset: 8px; border-radius: var(--tile-radius);
+      position: absolute; display: block; inset: 3px; border-radius: var(--tile-radius);
       overflow: hidden; backface-visibility: hidden; cursor: none;
     }
     .sphere-root .item__image img {
@@ -380,9 +377,7 @@
     .sphere-root .viewer .enlarge {
       position: absolute; z-index: 30; border-radius: var(--enlarge-radius); overflow: hidden;
       transition: transform .4s ease, opacity .4s ease; box-shadow: 0 20px 60px rgba(0,0,0,.5);
-    }
-    .sphere-root .viewer .enlarge {
-      background: #0a0909;
+      pointer-events: auto; background: #0a0909;
     }
     .sphere-root .viewer .enlarge img {
       width: 100%; height: 100%; object-fit: contain; object-position: center center;
@@ -617,9 +612,9 @@
         <div class="about-photo glass">
           <img id="profilePhoto" src="" alt="Rakesh Dontula">
         </div>
-        <div class="about-copy glass" style="padding:24px">
+        <div class="about-copy glass">
           <span class="section-label">About Me</span>
-          <h2 class="section-title">Hey, I'm <em>Rakesh Dontula!</em></h2>
+          <h2 class="section-title" style="margin-bottom:8px;font-size:clamp(1.8rem,3.5vw,2.6rem)">Hey, I'm <em>Rakesh Dontula!</em></h2>
           <p>I'm a <strong>DOP and Video Editor</strong> who lives for great storytelling. From setting up the perfect cinematic lighting on set to hitting that flawless cut in the edit suite, I transform raw concepts into unforgettable visual experiences.</p>
           <p>I've collaborated with creators, influencers, and brands to produce Music Films, Advertisement Films, Dance Films, Drama Films, and high-impact social formats.</p>
         </div>
@@ -690,10 +685,6 @@
               <div class="viewer"><div class="scrim"></div><div class="frame"></div></div>
             </main>
           </div>
-          <div class="gallery-nav">
-            <button type="button" id="galleryPrev" aria-label="Previous photos">‹</button>
-            <button type="button" id="galleryNext" aria-label="Next photos">›</button>
-          </div>
         </div>
       </div>
     </div>
@@ -707,11 +698,16 @@
         <a class="collab-start" href="https://mail.google.com/mail/?view=cm&fs=1&to=lrawogfx@gmail.com" target="_blank" rel="noopener noreferrer">Start a project</a>
       </div>
       <div class="collab-stage">
-        <h2 class="collab-title">Let's Collab</h2>
+        <h2 class="collab-title">Let's Work</h2>
         <div class="collab-left">
           <div>
             <div class="collab-label">Mail</div>
             <a class="collab-value" href="https://mail.google.com/mail/?view=cm&fs=1&to=lrawogfx@gmail.com" target="_blank" rel="noopener noreferrer">lrawogfx@gmail.com</a>
+          </div>
+          <div>
+            <div class="collab-label">Phone</div>
+            <a class="collab-value" href="tel:+918446644093">8446644093</a>
+            <a class="collab-value" href="tel:+919284707820" style="display:block;margin-top:4px">9284707820</a>
           </div>
           <div>
             <div class="collab-label">Instagram</div>
@@ -1035,12 +1031,6 @@
     if (profileImg) profileImg.src = mediaSrc(PROFILE_PHOTO);
     if (collabImg) collabImg.src = mediaSrc(typeof COLLAB_PHOTO !== "undefined" ? COLLAB_PHOTO : PROFILE_PHOTO);
     initDomeGallery("domeGallery", GALLERY_PHOTOS.map(p => ({ ...p, src: mediaSrc(p.src) })));
-
-    const galleryPrev = document.getElementById("galleryPrev");
-    const galleryNext = document.getElementById("galleryNext");
-    if (galleryPrev) galleryPrev.addEventListener("click", () => window.__domeGallery && window.__domeGallery.rotateBy(36));
-    if (galleryNext) galleryNext.addEventListener("click", () => window.__domeGallery && window.__domeGallery.rotateBy(-36));
-
     updateNav();
   </script>
 </body>

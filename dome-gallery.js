@@ -17,7 +17,7 @@
     const normalized = pool.length ? pool.map(p => typeof p === "string" ? { src: p, alt: "" } : p) : [];
     return coords.map((c, i) => {
       const p = normalized[i % Math.max(normalized.length, 1)] || { src: "", alt: "" };
-      return { ...c, src: p.src || "", alt: p.alt || "" };
+      return { ...c, src: p.src || "", alt: p.alt || "", photoIndex: normalized.length ? i % normalized.length : 0 };
     });
   }
 
@@ -32,7 +32,7 @@
   class DomeGallery {
     constructor(root, images) {
       this.root = root;
-      this.images = images;
+      this.images = (images || []).map(p => typeof p === "string" ? { src: p, alt: "" } : p);
       this.segments = DEFAULTS.segments;
       this.rotation = { x: 0, y: 0 };
       this.startRot = { x: 0, y: 0 };
@@ -41,8 +41,10 @@
       this.moved = false;
       this.lastDragEnd = 0;
       this.focusedEl = null;
+      this.focusedParent = null;
       this.opening = false;
-      this.autoSpeed = 0.08; // deg per frame — slow continuous spin
+      this.currentIndex = 0;
+      this.autoSpeed = 0.08;
       this.rafId = null;
       this.reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -59,7 +61,12 @@
       this.bindResize();
       this.startAutoRotate();
       this.scrim.addEventListener("click", () => this.closeEnlarge());
-      window.addEventListener("keydown", e => { if (e.key === "Escape") this.closeEnlarge(); });
+      window.addEventListener("keydown", e => {
+        if (!this.focusedEl) return;
+        if (e.key === "Escape") this.closeEnlarge();
+        if (e.key === "ArrowLeft") this.showRelative(-1);
+        if (e.key === "ArrowRight") this.showRelative(1);
+      });
     }
 
     gradients(i) {
@@ -126,7 +133,7 @@
     bindResize() {
       const ro = new ResizeObserver(entries => {
         const { width: w, height: h } = entries[0].contentRect;
-        const radius = clamp(Math.min(w, h) * 0.52, 280, 520);
+        const radius = clamp(Math.min(w, h) * 0.62, 340, 640);
         this.root.style.setProperty("--radius", radius + "px");
         this.applyTransform(this.rotation.x, this.rotation.y);
       });
@@ -164,29 +171,37 @@
       if (this.dragging || this.moved) return;
       if (performance.now() - this.lastDragEnd < 80) return;
       if (this.opening) return;
-      this.openEnlarge(el, parent, photo);
+      this.currentIndex = typeof photo.photoIndex === "number" ? photo.photoIndex : 0;
+      this.openEnlarge(el, parent);
     }
 
-    openEnlarge(el, parent, photo) {
+    openEnlarge(el, parent) {
       this.opening = true;
       document.body.classList.add("dg-scroll-lock");
+      if (this.focusedEl && this.focusedEl !== el) this.focusedEl.style.visibility = "";
       this.focusedEl = el;
+      this.focusedParent = parent;
       el.style.visibility = "hidden";
       const parentRot = computeItemBaseRotation(+parent.dataset.offsetX, +parent.dataset.offsetY, +parent.dataset.sizeX, +parent.dataset.sizeY, this.segments);
       const rotY = wrapAngleSigned(-(normalizeAngle(parentRot.rotateY) + normalizeAngle(this.rotation.y)));
       const rotX = -parentRot.rotateX - this.rotation.x;
       parent.style.setProperty("--rot-y-delta", rotY + "deg");
       parent.style.setProperty("--rot-x-delta", rotX + "deg");
+
+      const photo = this.images[this.currentIndex] || { src: "", alt: "" };
       const tileR = el.getBoundingClientRect();
       const mainR = this.main.getBoundingClientRect();
       const frameR = this.frame.getBoundingClientRect();
+
+      if (this.currentOverlay) this.currentOverlay.remove();
       const overlay = document.createElement("div");
       overlay.className = "enlarge";
       overlay.style.cssText = `left:${frameR.left - mainR.left}px;top:${frameR.top - mainR.top}px;width:${frameR.width}px;height:${frameR.height}px;opacity:0`;
       overlay.innerHTML = photo.src
-        ? `<img src="${photo.src}" alt="${photo.alt}"><div class="photo-caption"><h3>${photo.alt || "Still"}</h3></div><button type="button" class="photo-close">Close</button>`
+        ? `<img src="${photo.src}" alt=""><button type="button" class="enlarge-nav prev" aria-label="Previous photo">‹</button><button type="button" class="enlarge-nav next" aria-label="Next photo">›</button><button type="button" class="photo-close">Close</button>`
         : `<div style="width:100%;height:100%;background:linear-gradient(135deg,#3d2848,#c8b8f0)"></div><button type="button" class="photo-close">Close</button>`;
       this.viewer.appendChild(overlay);
+
       const tx = tileR.left - frameR.left, ty = tileR.top - frameR.top;
       const sx = tileR.width / frameR.width, sy = tileR.height / frameR.height;
       overlay.style.transform = `translate(${tx}px,${ty}px) scale(${sx},${sy})`;
@@ -195,21 +210,41 @@
         overlay.style.transform = "translate(0,0) scale(1,1)";
         this.root.setAttribute("data-enlarging", "true");
       });
+
       overlay.querySelector(".photo-close").addEventListener("click", e => { e.stopPropagation(); this.closeEnlarge(); });
+      const prevBtn = overlay.querySelector(".enlarge-nav.prev");
+      const nextBtn = overlay.querySelector(".enlarge-nav.next");
+      if (prevBtn) prevBtn.addEventListener("click", e => { e.stopPropagation(); this.showRelative(-1); });
+      if (nextBtn) nextBtn.addEventListener("click", e => { e.stopPropagation(); this.showRelative(1); });
+
       this.currentOverlay = overlay;
       this.opening = false;
+    }
+
+    showRelative(dir) {
+      if (!this.images.length || !this.focusedEl) return;
+      this.currentIndex = (this.currentIndex + dir + this.images.length) % this.images.length;
+      const photo = this.images[this.currentIndex];
+      const img = this.currentOverlay && this.currentOverlay.querySelector("img");
+      if (img && photo) {
+        img.src = photo.src;
+        img.alt = "";
+      }
     }
 
     closeEnlarge() {
       if (!this.focusedEl || !this.currentOverlay) return;
       const el = this.focusedEl;
-      const parent = el.parentElement;
+      const parent = this.focusedParent || el.parentElement;
       this.currentOverlay.remove();
       this.currentOverlay = null;
-      parent.style.setProperty("--rot-y-delta", "0deg");
-      parent.style.setProperty("--rot-x-delta", "0deg");
+      if (parent) {
+        parent.style.setProperty("--rot-y-delta", "0deg");
+        parent.style.setProperty("--rot-x-delta", "0deg");
+      }
       el.style.visibility = "";
       this.focusedEl = null;
+      this.focusedParent = null;
       this.root.removeAttribute("data-enlarging");
       document.body.classList.remove("dg-scroll-lock");
     }
