@@ -60,17 +60,17 @@
     }
 
     /* nav */
-    nav {
+    nav.site-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 500;
       display: flex; align-items: flex-start; justify-content: space-between;
       padding: 10px clamp(20px, 4vw, 48px) 16px;
       background: linear-gradient(to bottom, rgba(10,9,9,.9), transparent);
     }
-    nav .logo {
+    nav.site-nav .logo {
       display: flex; align-items: flex-start; line-height: 0;
       margin-top: -6px;
     }
-    nav .logo img {
+    nav.site-nav .logo img {
       height: clamp(72px, 9vw, 110px); width: auto;
       object-fit: contain; object-position: top left;
       filter: drop-shadow(0 4px 18px rgba(0,0,0,.55));
@@ -108,7 +108,14 @@
       position: absolute; top: 50%; left: 50%;
       width: 100vw; height: 56.25vw; min-height: 100%; min-width: 177.78vh;
       transform: translate(-50%, -50%); border: 0; object-fit: cover;
-      pointer-events: none;
+      pointer-events: none; z-index: 0;
+    }
+    #hero .hero-logo {
+      position: absolute; left: 50%; top: 50%; z-index: 1;
+      width: clamp(160px, 32vw, 380px); height: auto;
+      transform: translate(-50%, -50%);
+      opacity: 0.28; pointer-events: none;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,.4));
     }
     #heroMute {
       position: absolute; right: clamp(16px, 3vw, 28px); bottom: clamp(20px, 4vw, 36px);
@@ -187,54 +194,103 @@
     .svc-card p { margin-top: 8px; font-size: 14px; color: var(--muted); line-height: 1.7; }
     .svc-ico { color: var(--peach); font-size: 20px; }
 
-    .testimonials { margin-bottom: 72px; }
-    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 20px; }
-    .testimonial { padding: 22px; min-height: 260px; display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,.08); transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
-    .testimonial:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 22px 55px rgba(0,0,0,.75);
-      border-color: rgba(232,168,156,.45);
+    /* collab / contact — compact: mail | photo | nav beside each other */
+    #contact { padding: 80px clamp(20px, 5vw, 56px) 40px; min-height: auto; overflow: hidden; }
+    .collab-wrap { max-width: 1200px; margin: 0 auto; position: relative; }
+    .collab-top {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 24px; margin-bottom: 12px; flex-wrap: wrap;
+      position: relative; z-index: 4;
     }
-    .stars { color: #c9a96e; letter-spacing: .16em; font-size: 13px; margin-bottom: 14px; }
-    .quote {
+    .collab-avail {
+      font-family: "Space Mono", monospace; font-size: 9px; letter-spacing: .28em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .collab-start {
+      font-family: "Space Mono", monospace; font-size: 8px; letter-spacing: .12em;
+      text-transform: uppercase; padding: 6px 12px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.28); background: rgba(255,255,255,.92);
+      color: #0a0909; transition: .25s; display: inline-flex; align-items: center; gap: 6px;
+      position: relative; z-index: 5; pointer-events: auto; cursor: pointer !important;
+      line-height: 1; text-decoration: none;
+    }
+    .collab-start::before {
+      content: "→"; display: grid; place-items: center;
+      width: 14px; height: 14px; border-radius: 50%; background: #0a0909; color: #fff;
+      font-size: 9px; line-height: 1;
+    }
+    .collab-start:hover { background: var(--peach); border-color: var(--peach); color: #0a0909; }
+    .collab-stage {
+      display: grid;
+      grid-template-columns: minmax(140px, 1fr) auto minmax(140px, 1fr);
+      align-items: end; gap: clamp(16px, 3vw, 40px);
+      position: relative; min-height: clamp(280px, 42vh, 420px);
+    }
+    .collab-title {
+      position: absolute; left: 50%; top: 0;
+      transform: translateX(-50%);
+      z-index: 1; margin: 0; padding: 0;
       font-family: "DM Serif Display", serif;
-      font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-      font-style: italic; line-height: 1.6; color: var(--cream); flex: 1;
+      font-size: clamp(3.2rem, 10vw, 7rem);
+      line-height: .88; letter-spacing: -.02em;
+      color: #8a7355; font-weight: 400;
+      white-space: nowrap; pointer-events: none;
+      text-align: center;
     }
-    .person { display: flex; align-items: center; gap: 10px; margin-top: 16px; color: var(--muted); font-size: 13px; }
-    .avatar {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: rgba(232,168,156,.18); border: 1px solid rgba(232,168,156,.35);
-      display: grid; place-items: center; color: var(--peach); font-family: "Space Mono", monospace; font-size: 11px;
-      letter-spacing: .05em;
+    .collab-photo {
+      position: relative; z-index: 2;
+      width: clamp(200px, 26vw, 320px);
+      filter: grayscale(1) contrast(1.08);
+      pointer-events: none; justify-self: center;
     }
-
-    .contact-block { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; justify-content: center; }
-    .contact-links { margin-top: 18px; display: grid; gap: 10px; }
-    .contact-link {
-      display: flex; align-items: center; gap: 10px; color: var(--muted);
-      border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 10px 12px;
-      background: rgba(255,255,255,.02);
-      transition: border-color .3s ease, background .3s ease, transform .3s ease;
+    .collab-photo img {
+      display: block; width: 100%; height: auto;
+      object-fit: contain; object-position: center bottom;
+      -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
     }
-    .contact-link:hover {
-      border-color: rgba(232,168,156,.5);
-      background: rgba(232,168,156,.08);
-      transform: translateY(-2px);
+    .collab-left {
+      display: grid; gap: 18px; padding-bottom: 8px;
+      position: relative; z-index: 5; align-self: end; pointer-events: auto;
     }
-    .contact-link .ico { color: var(--peach); width: 16px; text-align: center; }
-    .contact-form .field { margin-bottom: 12px; }
-    .contact-form input, .contact-form textarea {
-      width: 100%; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
-      border-radius: 12px; padding: 14px; color: var(--cream); font-family: inherit;
+    .collab-label {
+      font-family: "Space Mono", monospace; font-size: 8px; letter-spacing: .28em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 4px;
     }
-    .contact-form textarea { min-height: 100px; resize: vertical; }
-    .btn-submit {
-      margin-top: 8px; padding: 14px 28px; border: none; border-radius: 999px;
-      background: linear-gradient(135deg, var(--peach), var(--peach-dim));
-      color: var(--bg); font-family: "Space Mono", monospace; font-size: 10px;
-      letter-spacing: .16em; text-transform: uppercase; cursor: none;
+    .collab-value {
+      font-family: "DM Serif Display", serif; font-size: clamp(.95rem, 1.4vw, 1.15rem);
+      color: var(--cream); transition: color .2s; line-height: 1.3;
+      pointer-events: auto; cursor: pointer !important; position: relative; z-index: 5;
+      text-decoration: none;
     }
+    a.collab-value:hover { color: var(--peach); }
+    .collab-nav {
+      position: relative; z-index: 3; display: block; width: 100%;
+      justify-self: end; padding-bottom: 8px; max-width: 220px;
+      background: none; margin-left: auto; align-self: end;
+    }
+    .collab-nav-label {
+      font-family: "Space Mono", monospace; font-size: 8px; letter-spacing: .28em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .collab-nav-label::before { content: "•"; color: var(--peach); }
+    .collab-nav a {
+      display: block; font-family: "DM Serif Display", serif;
+      font-size: clamp(1rem, 1.5vw, 1.2rem); color: var(--cream);
+      padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.1);
+      transition: color .2s, padding-left .2s; line-height: 1.2;
+    }
+    .collab-nav a:hover { color: var(--peach); padding-left: 6px; }
+    .collab-footer {
+      margin-top: 28px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+      font-family: "Space Mono", monospace; font-size: 8px; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .collab-socials { display: flex; gap: 16px; flex-wrap: wrap; }
+    .collab-socials a:hover { color: var(--peach); }
 
     /* dome gallery */
     #photos { margin-bottom: 72px; }
@@ -243,6 +299,19 @@
       border-radius: 24px; overflow: hidden; position: relative;
       background: radial-gradient(ellipse at center, #1a1520 0%, var(--bg) 70%);
     }
+    .gallery-nav {
+      position: absolute; inset: 0; z-index: 12; pointer-events: none;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(12px, 2vw, 20px);
+    }
+    .gallery-nav button {
+      pointer-events: auto; width: 48px; height: 48px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.22); background: rgba(0,0,0,.45);
+      color: var(--cream); font-size: 22px; line-height: 1;
+      backdrop-filter: blur(8px); transition: border-color .2s, background .2s, color .2s;
+      display: grid; place-items: center;
+    }
+    .gallery-nav button:hover { border-color: var(--peach); color: var(--peach); background: rgba(0,0,0,.7); }
     .sphere-root {
       position: relative; width: 100%; height: 100%;
       --radius: 420px; --segments-x: 22; --segments-y: 22;
@@ -291,13 +360,18 @@
       overflow: hidden; backface-visibility: hidden; cursor: none;
     }
     .sphere-root .item__image img {
-      width: 100%; height: 100%; object-fit: cover; filter: var(--image-filter);
+      width: 100%; height: 100%; object-fit: cover; object-position: center center;
+      filter: var(--image-filter);
     }
     .sphere-root .viewer {
       position: absolute; inset: 0; z-index: 20; pointer-events: none;
       display: flex; align-items: center; justify-content: center; padding: 48px;
     }
-    .sphere-root .viewer .frame { height: 100%; aspect-ratio: 1; border-radius: var(--enlarge-radius); }
+    .sphere-root .viewer .frame {
+      width: min(88vw, 480px); height: min(72vh, 720px);
+      max-height: 100%; border-radius: var(--enlarge-radius);
+      background: transparent; pointer-events: none;
+    }
     .sphere-root .viewer .scrim {
       position: absolute; inset: 0; z-index: 10; background: rgba(0,0,0,.5);
       pointer-events: none; opacity: 0; transition: opacity .4s; backdrop-filter: blur(4px);
@@ -307,7 +381,13 @@
       position: absolute; z-index: 30; border-radius: var(--enlarge-radius); overflow: hidden;
       transition: transform .4s ease, opacity .4s ease; box-shadow: 0 20px 60px rgba(0,0,0,.5);
     }
-    .sphere-root .viewer .enlarge img { width: 100%; height: 100%; object-fit: cover; filter: var(--image-filter); }
+    .sphere-root .viewer .enlarge {
+      background: #0a0909;
+    }
+    .sphere-root .viewer .enlarge img {
+      width: 100%; height: 100%; object-fit: contain; object-position: center center;
+      filter: var(--image-filter); background: #0a0909;
+    }
     .sphere-root .photo-caption {
       position: absolute; bottom: 0; left: 0; right: 0; padding: 16px;
       background: linear-gradient(transparent, rgba(0,0,0,.8));
@@ -358,7 +438,7 @@
       background: var(--grad); pointer-events: none;
     }
     .panel.is-expanded { flex: 5.5 1 0; box-shadow: 0 22px 60px rgba(0,0,0,.85); }
-    .panel.is-slim { flex: 0.42 1 0; }
+    .panel.is-slim { flex: 0.32 1 0; }
     .panel:hover:not(.is-expanded) { box-shadow: inset 0 0 40px rgba(255,255,255,.04); }
 
     .panel-slim {
@@ -474,8 +554,10 @@
       .expertise-grid, .services-grid { grid-template-columns: 1fr 1fr; }
       .stats { grid-template-columns: 1fr 1fr; }
       .about-block { grid-template-columns: 1fr; }
-      .testimonials-grid { grid-template-columns: 1fr; }
-      .contact-block { grid-template-columns: 1fr; }
+      .collab-stage { grid-template-columns: 1fr; justify-items: center; text-align: left; min-height: 0; gap: 20px; }
+      .collab-left, .collab-nav { width: 100%; max-width: 280px; justify-self: center; margin: 0; }
+      .collab-photo { order: -1; }
+      .collab-title { font-size: clamp(2.8rem, 14vw, 4.5rem); top: 0; }
       .panel-strip {
         flex-direction: column; height: auto; min-height: 0;
       }
@@ -501,7 +583,7 @@
   <div id="cursor-ring"></div>
   <div id="cursor-label">PLAY</div>
 
-  <nav>
+  <nav class="site-nav">
     <a class="logo" href="#hero"><img src="images/logo.png" alt="L_RAWOG_FX Studio"></a>
     <div class="nav-pills">
       <a class="nav-pill active" href="#hero" data-page="home">Home</a>
@@ -517,12 +599,13 @@
     <div class="hero-frame">
       <video
         id="heroVideo"
-        src="videos/Final_moksham_teaser_web.mp4"
         autoplay
+        muted
         playsinline
         loop
         preload="auto"
       ></video>
+      <img class="hero-logo" src="images/logo.png" alt="">
       <button type="button" id="heroMute" aria-label="Mute homepage video" title="Mute / Unmute">🔊</button>
     </div>
   </section>
@@ -573,28 +656,6 @@
           <article class="svc-card glass"><span class="svc-ico">✦</span><h3>VFX &amp; Finishing</h3><p>Compositing, enhancement, and final polish.</p></article>
         </div>
       </div>
-
-      <div class="testimonials reveal">
-        <span class="section-label">What Clients Say</span>
-        <h2 class="section-title">What <em>Clients Say</em></h2>
-        <div class="testimonials-grid">
-          <article class="testimonial glass">
-            <div class="stars">★★★★★</div>
-            <p class="quote">"Rakesh transformed our brand campaign into something we never expected. The cinematography was breathtaking."</p>
-            <div class="person"><span class="avatar">AR</span><span>Aarav Reddy, Brand Director</span></div>
-          </article>
-          <article class="testimonial glass">
-            <div class="stars">★★★★★</div>
-            <p class="quote">"Working with Rakesh on our music video was a revelation. He understood the track and created visuals born from the music."</p>
-            <div class="person"><span class="avatar">SN</span><span>Sana Nair, Independent Artist</span></div>
-          </article>
-          <article class="testimonial glass">
-            <div class="stars">★★★★★</div>
-            <p class="quote">"The color grade alone was worth every rupee. Our dance film came back looking like a Netflix production."</p>
-            <div class="person"><span class="avatar">KM</span><span>Karthik Menon, Choreographer</span></div>
-          </article>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -618,7 +679,7 @@
         <span class="section-label">Still Frames</span>
         <h2 class="section-title">Photo <em>Gallery</em></h2>
         <p class="section-desc" style="margin-bottom:16px">Drag to explore — tap any frame to enlarge.</p>
-        <div class="dome-wrap glass">
+        <div class="dome-wrap">
           <div id="domeGallery" class="sphere-root">
             <main class="sphere-main">
               <div class="stage"><div class="sphere"></div></div>
@@ -629,31 +690,52 @@
               <div class="viewer"><div class="scrim"></div><div class="frame"></div></div>
             </main>
           </div>
+          <div class="gallery-nav">
+            <button type="button" id="galleryPrev" aria-label="Previous photos">‹</button>
+            <button type="button" id="galleryNext" aria-label="Next photos">›</button>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PAGE 5: CONTACT -->
+  <!-- PAGE 5: CONTACT / COLLAB -->
   <section class="page" id="contact">
-    <div class="wrap">
-      <div class="contact-block reveal">
-        <div>
-          <span class="section-label">Get in Touch</span>
-          <h2 class="section-title">Let's build the next <em>cinematic story</em></h2>
-          <p class="section-desc" style="margin-bottom:20px">Share your brief, timelines, and references. I handle production, edit, VFX, and grading end-to-end.</p>
-          <div class="contact-links">
-            <a class="contact-link" href="mailto:lrawogfx@gmail.com"><span class="ico">✉</span><span>lrawogfx@gmail.com</span></a>
-            <a class="contact-link" href="https://www.instagram.com/l_rawog_fx?igsh=MW80cmxwaXlmaTZlaQ==" target="_blank" rel="noopener noreferrer"><span class="ico">◎</span><span>Instagram / @l_rawog_fx</span></a>
-            <a class="contact-link" href="#" onclick="return false;"><span class="ico">▶</span><span>YouTube / L_RAWOG_FX_STUDIO</span></a>
+    <div class="collab-wrap reveal">
+      <div class="collab-top">
+        <span class="collab-avail">Available for projects • Open for collabs</span>
+        <a class="collab-start" href="https://mail.google.com/mail/?view=cm&fs=1&to=lrawogfx@gmail.com" target="_blank" rel="noopener noreferrer">Start a project</a>
+      </div>
+      <div class="collab-stage">
+        <h2 class="collab-title">Let's Collab</h2>
+        <div class="collab-left">
+          <div>
+            <div class="collab-label">Mail</div>
+            <a class="collab-value" href="https://mail.google.com/mail/?view=cm&fs=1&to=lrawogfx@gmail.com" target="_blank" rel="noopener noreferrer">lrawogfx@gmail.com</a>
+          </div>
+          <div>
+            <div class="collab-label">Instagram</div>
+            <a class="collab-value" href="https://www.instagram.com/l_rawog_fx_studio/" target="_blank" rel="noopener noreferrer">@l_rawog_fx_studio</a>
           </div>
         </div>
-        <form class="contact-form glass" style="padding:24px" onsubmit="return false">
-          <div class="field"><input type="text" placeholder="Name"></div>
-          <div class="field"><input type="email" placeholder="Email"></div>
-          <div class="field"><textarea placeholder="Project brief"></textarea></div>
-          <button type="button" class="btn-submit">Send Brief</button>
-        </form>
+        <div class="collab-photo">
+          <img id="collabPhoto" src="" alt="Rakesh Dontula">
+        </div>
+        <div class="collab-nav">
+          <div class="collab-nav-label">Navigation</div>
+          <a href="#hero">Home</a>
+          <a href="#page-profile">Profile</a>
+          <a href="#page-reels">Works</a>
+          <a href="#photos">Gallery</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <div class="collab-footer">
+        <span>©2026 L_RAWOG_FX STUDIO</span>
+        <div class="collab-socials">
+          <a href="https://www.instagram.com/l_rawog_fx_studio/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lrawogfx@gmail.com" target="_blank" rel="noopener noreferrer">Email</a>
+        </div>
       </div>
     </div>
   </section>
@@ -862,14 +944,25 @@
       return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
     }
 
+    function toInstagramEmbed(reelId) {
+      if (!reelId) return "";
+      return `https://www.instagram.com/reel/${reelId}/embed`;
+    }
+
     function openVideoOverlay(vidId, title) {
       const video = videoMap[vidId];
-      if (!video || !video.youtubeId) return;
+      if (!video || (!video.youtubeId && !video.instagramId)) return;
       currentVidId = vidId;
       voTitle.textContent = title;
-      voYoutube.src = toYoutubeEmbed(video.youtubeId);
+      voYoutube.classList.remove("short-frame");
+      if (video.instagramId) {
+        voYoutube.src = toInstagramEmbed(video.instagramId);
+        voYoutube.classList.add("short-frame");
+      } else {
+        voYoutube.src = toYoutubeEmbed(video.youtubeId);
+        voYoutube.classList.toggle("short-frame", !!video.isShort);
+      }
       voYoutube.classList.add("active");
-      voYoutube.classList.toggle("short-frame", !!video.isShort);
       overlay.classList.remove("hidden");
       overlay.setAttribute("aria-hidden", "false");
       document.body.classList.add("dg-scroll-lock");
@@ -909,8 +1002,8 @@
     const heroMute = document.getElementById("heroMute");
     if (heroVideo) {
       heroVideo.src = mediaSrc(HERO_VIDEO);
-      heroVideo.muted = false;
       heroVideo.volume = 1;
+      heroVideo.muted = true;
       heroVideo.removeAttribute("controls");
 
       const syncMuteBtn = () => {
@@ -921,6 +1014,7 @@
 
       const playHero = () => heroVideo.play().catch(() => {});
 
+      heroVideo.addEventListener("loadeddata", playHero, { once: true });
       playHero();
       syncMuteBtn();
 
@@ -932,23 +1026,21 @@
           syncMuteBtn();
         });
       }
-
-      const unlock = () => {
-        if (!heroVideo.muted) playHero();
-        window.removeEventListener("pointerdown", unlock);
-        window.removeEventListener("keydown", unlock);
-        window.removeEventListener("touchstart", unlock);
-      };
-      window.addEventListener("pointerdown", unlock, { once: true });
-      window.addEventListener("keydown", unlock, { once: true });
-      window.addEventListener("touchstart", unlock, { once: true });
     }
 
     /* ── DOME GALLERY ── */
     renderPanels();
     const profileImg = document.getElementById("profilePhoto");
+    const collabImg = document.getElementById("collabPhoto");
     if (profileImg) profileImg.src = mediaSrc(PROFILE_PHOTO);
+    if (collabImg) collabImg.src = mediaSrc(typeof COLLAB_PHOTO !== "undefined" ? COLLAB_PHOTO : PROFILE_PHOTO);
     initDomeGallery("domeGallery", GALLERY_PHOTOS.map(p => ({ ...p, src: mediaSrc(p.src) })));
+
+    const galleryPrev = document.getElementById("galleryPrev");
+    const galleryNext = document.getElementById("galleryNext");
+    if (galleryPrev) galleryPrev.addEventListener("click", () => window.__domeGallery && window.__domeGallery.rotateBy(36));
+    if (galleryNext) galleryNext.addEventListener("click", () => window.__domeGallery && window.__domeGallery.rotateBy(-36));
+
     updateNav();
   </script>
 </body>

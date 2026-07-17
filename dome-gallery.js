@@ -90,7 +90,7 @@
         const face = document.createElement("div");
         face.className = "item__image";
         if (it.src) {
-          face.innerHTML = `<img src="${it.src}" alt="" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#2a2030,#161018)'">`;
+          face.innerHTML = `<img src="${it.src}" alt="" loading="eager" decoding="async" onerror="this.onerror=null;this.src='images/gallery-01.jpg'">`;
         } else {
           face.innerHTML = `<div style="width:100%;height:100%;background:${this.gradients(i)}"></div>`;
         }
@@ -103,6 +103,12 @@
 
     applyTransform(xDeg, yDeg) {
       this.sphere.style.transform = `translateZ(calc(var(--radius) * -1)) rotateX(${xDeg}deg) rotateY(${yDeg}deg)`;
+    }
+
+    rotateBy(degY) {
+      if (this.focusedEl) return;
+      this.rotation.y = wrapAngleSigned(this.rotation.y + degY);
+      this.applyTransform(this.rotation.x, this.rotation.y);
     }
 
     startAutoRotate() {
@@ -211,6 +217,9 @@
 
   window.initDomeGallery = function (rootId, images) {
     const root = document.getElementById(rootId);
-    if (root) new DomeGallery(root, images);
+    if (!root) return null;
+    const gallery = new DomeGallery(root, images);
+    window.__domeGallery = gallery;
+    return gallery;
   };
 })();
