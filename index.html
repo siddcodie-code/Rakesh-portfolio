@@ -127,7 +127,7 @@
     #heroMute:hover { border-color: var(--peach); background: rgba(0,0,0,.65); }
 
     /* profile */
-    #page-profile { padding: 100px clamp(20px, 5vw, 56px) 80px; }
+    #page-profile { padding: 100px clamp(20px, 5vw, 56px) 60px; }
     .wrap { max-width: 1200px; margin: 0 auto; }
     .section-label {
       font-family: "Space Mono", monospace; font-size: 10px; letter-spacing: .35em;
@@ -142,16 +142,24 @@
     .section-title em { font-style: italic; color: var(--peach); }
     .section-desc { color: var(--muted); line-height: 1.8; max-width: 560px; }
     .about-block {
-      margin-bottom: 40px;
-      display: grid; grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: start;
+      margin-bottom: 28px;
+      display: grid; grid-template-columns: minmax(260px, 40%) 1fr; gap: 20px;
+      align-items: start;
     }
     .about-photo {
-      border-radius: 18px; overflow: hidden; min-height: 0; aspect-ratio: 3/4; max-height: 420px;
+      border-radius: 18px; overflow: hidden;
+      aspect-ratio: 3/4; max-height: 460px; width: 100%;
       border: 1px solid rgba(255,255,255,.1);
     }
-    .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-    .about-copy { padding: 18px 20px; }
-    .about-block p { color: var(--muted); line-height: 1.7; margin-top: 10px; max-width: 720px; font-size: 15px; }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+    .about-copy {
+      padding: 22px 26px;
+      align-self: start;
+    }
+    .about-block .section-label { margin-bottom: 10px; }
+    .about-block .section-title { margin-bottom: 10px !important; }
+    .about-block p { color: var(--muted); line-height: 1.65; margin-top: 8px; max-width: 720px; font-size: 15px; }
+    .about-block p:last-child { margin-bottom: 0; }
     .about-block p strong { color: var(--cream); font-weight: 500; }
 
     .glass {
@@ -543,12 +551,16 @@
     .vo-nav:hover { border-color: var(--peach); color: var(--peach); }
 
     .reveal { opacity: 0; transform: translateY(40px); }
+    .reveal-left { opacity: 0; transform: translateX(-48px); }
+    .reveal-right { opacity: 0; transform: translateX(48px); }
+    .reveal-scale { opacity: 0; transform: scale(0.92) translateY(24px); }
 
     @media (max-width: 900px) {
       .nav-pills { display: none; }
       .expertise-grid, .services-grid { grid-template-columns: 1fr 1fr; }
       .stats { grid-template-columns: 1fr 1fr; }
       .about-block { grid-template-columns: 1fr; }
+      .about-photo { max-height: 420px; max-width: 360px; margin: 0 auto; }
       .collab-stage { grid-template-columns: 1fr; justify-items: center; text-align: left; min-height: 0; gap: 20px; }
       .collab-left, .collab-nav { width: 100%; max-width: 280px; justify-self: center; margin: 0; }
       .collab-photo { order: -1; }
@@ -608,33 +620,33 @@
   <!-- PAGE 2: PROFILE -->
   <section class="page" id="page-profile">
     <div class="wrap">
-      <div class="about-block reveal">
-        <div class="about-photo glass">
+      <div class="about-block">
+        <div class="about-photo glass reveal-left">
           <img id="profilePhoto" src="" alt="Rakesh Dontula">
         </div>
-        <div class="about-copy glass">
+        <div class="about-copy glass reveal-right">
           <span class="section-label">About Me</span>
-          <h2 class="section-title" style="margin-bottom:8px;font-size:clamp(1.8rem,3.5vw,2.6rem)">Hey, I'm <em>Rakesh Dontula!</em></h2>
+          <h2 class="section-title" style="font-size:clamp(1.75rem,3.5vw,2.4rem)">Hey, I'm <em>Rakesh Dontula!</em></h2>
           <p>I'm a <strong>DOP and Video Editor</strong> who lives for great storytelling. From setting up the perfect cinematic lighting on set to hitting that flawless cut in the edit suite, I transform raw concepts into unforgettable visual experiences.</p>
           <p>I've collaborated with creators, influencers, and brands to produce Music Films, Advertisement Films, Dance Films, Drama Films, and high-impact social formats.</p>
         </div>
       </div>
 
-      <div class="stats reveal">
-        <div class="stat glass"><div class="n">50+</div><div class="l">Projects</div></div>
-        <div class="stat glass"><div class="n">5+</div><div class="l">Years</div></div>
-        <div class="stat glass"><div class="n">12</div><div class="l">Brands</div></div>
-        <div class="stat glass"><div class="n">100%</div><div class="l">Commitment</div></div>
+      <div class="stats reveal-stagger">
+        <div class="stat glass reveal-scale"><div class="n" data-count="50" data-suffix="+">0+</div><div class="l">Projects</div></div>
+        <div class="stat glass reveal-scale"><div class="n" data-count="5" data-suffix="+">0+</div><div class="l">Years</div></div>
+        <div class="stat glass reveal-scale"><div class="n" data-count="12" data-suffix="">0</div><div class="l">Brands</div></div>
+        <div class="stat glass reveal-scale"><div class="n" data-count="100" data-suffix="%">0%</div><div class="l">Commitment</div></div>
       </div>
 
       <div class="reveal">
         <span class="section-label">My Craft</span>
         <h2 class="section-title">Areas of <em>Expertise</em></h2>
         <p class="section-desc" style="margin-bottom:24px">From behind the lens to inside the edit suite — every frame is a deliberate creative decision.</p>
-        <div class="expertise-grid">
-          <article class="exp-card glass"><span class="num">01</span><h3>Director of Photography</h3><p>Visual storytelling, shot composition, and mood-centric scene design.</p></article>
-          <article class="exp-card glass"><span class="num">02</span><h3>Video Editing</h3><p>Rhythm-first cutting and emotional pacing for music and branded films.</p></article>
-          <article class="exp-card glass"><span class="num">03</span><h3>DI</h3><p>Cinematic palettes, contrast sculpting, and distribution-ready final polish.</p></article>
+        <div class="expertise-grid reveal-stagger">
+          <article class="exp-card glass reveal-scale"><span class="num">01</span><h3>Director of Photography</h3><p>Visual storytelling, shot composition, and mood-centric scene design.</p></article>
+          <article class="exp-card glass reveal-scale"><span class="num">02</span><h3>Video Editing</h3><p>Rhythm-first cutting and emotional pacing for music and branded films.</p></article>
+          <article class="exp-card glass reveal-scale"><span class="num">03</span><h3>DI</h3><p>Cinematic palettes, contrast sculpting, and distribution-ready final polish.</p></article>
         </div>
       </div>
 
@@ -642,13 +654,13 @@
         <span class="section-label">What I Deliver</span>
         <h2 class="section-title">Services &amp; <em>Deliverables</em></h2>
         <p class="section-desc" style="margin-bottom:24px">End-to-end production — from concept through final delivery and distribution-ready mastering.</p>
-        <div class="services-grid">
-          <article class="svc-card glass"><span class="svc-ico">♪</span><h3>Music Films</h3><p>Cinematic music videos that amplify artist vision.</p></article>
-          <article class="svc-card glass"><span class="svc-ico">◈</span><h3>Advertisement Films</h3><p>High-impact commercial content built to sell through emotion.</p></article>
-          <article class="svc-card glass"><span class="svc-ico">◉</span><h3>Concerts &amp; DJing</h3><p>Live-event visuals engineered for crowd energy and impact.</p></article>
-          <article class="svc-card glass"><span class="svc-ico">▣</span><h3>Drama Films</h3><p>Narrative shorts with cinematic production quality.</p></article>
-          <article class="svc-card glass"><span class="svc-ico">◇</span><h3>Commercials</h3><p>Polished brand spots with precision finishing.</p></article>
-          <article class="svc-card glass"><span class="svc-ico">✦</span><h3>VFX &amp; Finishing</h3><p>Compositing, enhancement, and final polish.</p></article>
+        <div class="services-grid reveal-stagger">
+          <article class="svc-card glass reveal-scale"><span class="svc-ico">♪</span><h3>Music Films</h3><p>Cinematic music videos that amplify artist vision.</p></article>
+          <article class="svc-card glass reveal-scale"><span class="svc-ico">◈</span><h3>Advertisement Films</h3><p>High-impact commercial content built to sell through emotion.</p></article>
+          <article class="svc-card glass reveal-scale"><span class="svc-ico">◉</span><h3>Concerts &amp; DJing</h3><p>Live-event visuals engineered for crowd energy and impact.</p></article>
+          <article class="svc-card glass reveal-scale"><span class="svc-ico">▣</span><h3>Drama Films</h3><p>Narrative shorts with cinematic production quality.</p></article>
+          <article class="svc-card glass reveal-scale"><span class="svc-ico">◇</span><h3>Commercials</h3><p>Polished brand spots with precision finishing.</p></article>
+          <article class="svc-card glass reveal-scale"><span class="svc-ico">✦</span><h3>VFX &amp; Finishing</h3><p>Compositing, enhancement, and final polish.</p></article>
         </div>
       </div>
     </div>
@@ -817,11 +829,41 @@
     }
     window.addEventListener("scroll", updateNav, { passive: true });
 
-    /* ── SCROLL REVEAL (Framer Motion–style) ── */
+    /* ── SCROLL REVEAL & MOTION ── */
     gsap.utils.toArray(".reveal").forEach(el => {
       gsap.to(el, {
         opacity: 1, y: 0, duration: 0.9, ease: "power3.out",
         scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none none" }
+      });
+    });
+    gsap.utils.toArray(".reveal-left").forEach(el => {
+      gsap.to(el, {
+        opacity: 1, x: 0, duration: 1, ease: "power3.out",
+        scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" }
+      });
+    });
+    gsap.utils.toArray(".reveal-right").forEach(el => {
+      gsap.to(el, {
+        opacity: 1, x: 0, duration: 1, ease: "power3.out", delay: 0.08,
+        scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" }
+      });
+    });
+    gsap.utils.toArray(".reveal-stagger").forEach(container => {
+      const items = container.querySelectorAll(".reveal-scale, .stat, .exp-card, .svc-card");
+      gsap.to(items, {
+        opacity: 1, scale: 1, y: 0, duration: 0.75, ease: "power3.out", stagger: 0.12,
+        scrollTrigger: { trigger: container, start: "top 82%", toggleActions: "play none none none" }
+      });
+    });
+
+    document.querySelectorAll(".stat .n[data-count]").forEach(el => {
+      const end = +el.dataset.count || 0;
+      const suffix = el.dataset.suffix || "";
+      const counter = { val: 0 };
+      gsap.to(counter, {
+        val: end, duration: 1.8, ease: "power2.out",
+        scrollTrigger: { trigger: el.closest(".stats"), start: "top 80%", toggleActions: "play none none none" },
+        onUpdate: () => { el.textContent = Math.round(counter.val) + suffix; }
       });
     });
 

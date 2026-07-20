@@ -10,13 +10,21 @@ const PORTFOLIO_CATEGORIES = [
     videos: [
       { id: "mf1", title: "AAKHARI PRAYANAM", year: "2024", youtubeId: "S-HUNgsKFgk", isShort: false },
       { id: "mf2", title: "Raava Naatho", year: "2024", youtubeId: "7Zo0dAcWRas", isShort: false },
-      { id: "mf3", title: "StreetViolater", year: "2024", youtubeId: "gs4qOBaCyzs", isShort: false },
-      { id: "mf4", title: "BadVibesssss", year: "2024", youtubeId: "fKtwEqhca04", isShort: false },
-      { id: "mf5", title: "Antha Anukunna", year: "2024", youtubeId: "q_KzCmJqfV0", isShort: false },
-      { id: "mf6", title: "AISICH HU", year: "2024", youtubeId: "9ezQw9-wvqw", isShort: false },
-      { id: "mf7", title: "Calory 🚀🎧", year: "2024", instagramId: "DZaolNWREHC", isShort: true },
-      { id: "mf8", title: "EE ROJU ANTU", year: "2024", youtubeId: "rhZXcDwTtR0", isShort: false },
-      { id: "mf9", title: "Gaanjaayinichillu", year: "2024", instagramId: "DZxq40Kta6D", isShort: true }
+      { id: "mf3", title: "GNYANA PADAM", year: "2024", youtubeId: "0-q3Kj_IOfY", isShort: false },
+      { id: "mf4", title: "StreetViolater", year: "2024", youtubeId: "gs4qOBaCyzs", isShort: false },
+      { id: "mf5", title: "BadVibesssss", year: "2024", youtubeId: "fKtwEqhca04", isShort: false },
+      { id: "mf6", title: "Antha Anukunna", year: "2024", youtubeId: "q_KzCmJqfV0", isShort: false },
+      { id: "mf7", title: "Neninthe", year: "2024", instagramId: "DXeAiC9gje-", isShort: true },
+      { id: "mf8", title: "Best Pre Wedding", year: "2024", youtubeId: "M4hgeJp6UJk", isShort: false },
+      { id: "mf9", title: "Shashidhar X Vijaya Pre Wedding", year: "2024", youtubeId: "cp5IgSNAFHo", isShort: false },
+      { id: "mf10", title: "B. R. Ambedkar", year: "2024", youtubeId: "aIXPguTG9wM", isShort: false },
+      { id: "mf11", title: "JAGGA JATT", year: "2024", youtubeId: "1zmneyBKTG4", isShort: false },
+      { id: "mf12", title: "Elegance on wheels", year: "2024", youtubeId: "rXjAYcUTZPk", isShort: false },
+      { id: "mf13", title: "IKKA", year: "2024", youtubeId: "1zmneyBKTG4", isShort: false },
+      { id: "mf14", title: "AISICH HU", year: "2024", youtubeId: "9ezQw9-wvqw", isShort: false },
+      { id: "mf15", title: "Calory 🚀🎧", year: "2024", instagramId: "DZaolNWREHC", isShort: true },
+      { id: "mf16", title: "EE ROJU ANTU", year: "2024", youtubeId: "rhZXcDwTtR0", isShort: false },
+      { id: "mf17", title: "Gaanjaayinichillu", year: "2024", instagramId: "DZxq40Kta6D", isShort: true }
     ]
   },
   {
@@ -74,7 +82,31 @@ const PORTFOLIO_CATEGORIES = [
       { id: "df3", title: "Rohit Mankar", year: "2024", youtubeId: "Www4mbhPg4Q", isShort: true },
       { id: "df4", title: "Barood - Rakesh & Navin", year: "2024", youtubeId: "eCGKJcysq3g", isShort: true },
       { id: "df5", title: "DIVINE - Gunehgar", year: "2024", youtubeId: "rBCK4tJIsek", isShort: true },
-      { id: "df6", title: "Ashish Patil", year: "2024", youtubeId: "QvGPKeuesAw", isShort: true }
+      { id: "df6", title: "Ashish Patil", year: "2024", youtubeId: "QvGPKeuesAw", isShort: true },
+      { id: "df7", title: "Boom!", year: "2024", instagramId: "DWwHEhlsTsc", isShort: true },
+      { id: "df8", title: "ON TOP!", year: "2024", instagramId: "DWTyTnbsp_V", isShort: true },
+      { id: "df9", title: "Dance Film", year: "2024", instagramId: "DTKIsjEjHMx", isShort: true },
+      { id: "df10", title: "Dance Film", year: "2024", instagramId: "DLiPkQByvHy", isShort: true },
+      { id: "df11", title: "CHIKKAMA", year: "2024", instagramId: "DLZ_iZ7Sooj", isShort: true },
+      { id: "df12", title: "Dance Film", year: "2024", instagramId: "DL4PoNQibfM", isShort: true },
+      { id: "df13", title: "Gira Gira Gingiraagirey", year: "2024", youtubeId: "2lYdldsRjw4", isShort: false },
+      { id: "df14", title: "Bommanu Geesthey", year: "2024", youtubeId: "JQXWdWPZvGA", isShort: false }
+    ]
+  },
+  {
+    id: "concert-djing",
+    title: "Concert & DJing",
+    subtitle: "Live × Energy × Crowd",
+    accent: "#e8c4a0",
+    gradient: "linear-gradient(145deg, #382818 0%, #141008 100%)",
+    videos: [
+      { id: "cd1", title: "Handcrafted by me", year: "2024", instagramId: "C16SRYarFjw", isShort: true },
+      { id: "cd2", title: "Roll Rida", year: "2024", youtubeId: "xeZqkPfDDd4", isShort: false },
+      { id: "cd3", title: "Roll Rida 2", year: "2024", youtubeId: "Y9Av_GyG2KU", isShort: true },
+      { id: "cd4", title: "Big Bull", year: "2024", youtubeId: "-L5tHkUk0uk", isShort: true },
+      { id: "cd5", title: "Shorbazaar.ind", year: "2024", youtubeId: "RvDTfGZ4Dmg", isShort: true },
+      { id: "cd6", title: "DJ Perch", year: "2024", youtubeId: "U4TJ-2RmcFY", isShort: true },
+      { id: "cd7", title: "Sunburn Festival", year: "2024", instagramId: "C3955A4Livh", isShort: true }
     ]
   },
   {
@@ -117,7 +149,8 @@ const PORTFOLIO_CATEGORIES = [
     videos: [
       { id: "bd1", title: "Aisich Hun Breakdown", year: "2024", youtubeId: "XcScFmhHKWA", isShort: false },
       { id: "bd2", title: "Gnyana Padama Timeline Breakdown", year: "2024", youtubeId: "-PJVGfCPFdI", isShort: false },
-      { id: "bd3", title: "GODZILLA MUMBAI Breakdown", year: "2024", youtubeId: "wcxxVI8lFWI", isShort: false }
+      { id: "bd3", title: "GODZILLA MUMBAI Breakdown", year: "2024", youtubeId: "wcxxVI8lFWI", isShort: false },
+      { id: "bd4", title: "Breakdown Reel", year: "2024", instagramId: "CxsG3YlLmep", isShort: true }
     ]
   }
 ];
