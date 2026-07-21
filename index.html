@@ -34,51 +34,58 @@
     img, video { display: block; max-width: 100%; }
     body.preloading { overflow: hidden; }
 
-    /* studio pre-loader */
+    /* studio pre-loader — logo only, split at logo's built-in line */
     #preloader {
       position: fixed; inset: 0; z-index: 20000;
-      background: var(--bg); display: grid; place-items: center;
-      overflow: hidden;
+      background: transparent; overflow: hidden; pointer-events: all;
     }
-    #preloader .preloader-inner {
-      position: relative; z-index: 2; text-align: center;
-      display: flex; flex-direction: column; align-items: center; gap: 28px;
+    #preloader .preloader-cover-top,
+    #preloader .preloader-cover-bottom {
+      position: fixed; left: 0; right: 0; background: var(--bg); z-index: 2;
     }
-    #preloader .preloader-logo {
-      width: clamp(72px, 14vw, 110px); opacity: 0;
-    }
-    #preloader .preloader-logo img { width: 100%; height: auto; margin: 0 auto; }
-    #preloader .preloader-bars {
-      display: flex; flex-direction: column; gap: 7px;
-      width: min(300px, 72vw);
-    }
-    #preloader .preloader-bar {
-      height: 2px; background: var(--peach); transform: scaleX(0);
-      transform-origin: left center;
-    }
-    #preloader .preloader-bar:nth-child(2) { transform-origin: right center; }
     #preloader .preloader-brand {
-      display: flex; align-items: center; justify-content: center;
-      gap: clamp(10px, 2vw, 18px); overflow: hidden;
-      font-family: "DM Serif Display", serif;
-      font-size: clamp(1.8rem, 5.5vw, 3.6rem);
-      letter-spacing: .06em; line-height: 1; color: var(--cream);
-    }
-    #preloader .preloader-left,
-    #preloader .preloader-right {
-      display: block; transform: translateY(120%);
-    }
-    #preloader .preloader-right { color: var(--peach); font-style: italic; }
-    #preloader .preloader-tag {
-      font-family: "Space Mono", monospace; font-size: 9px;
-      letter-spacing: .32em; text-transform: uppercase; color: var(--muted);
+      position: fixed; left: 50%; top: 50%; z-index: 4;
+      width: clamp(160px, 32vw, 260px);
       opacity: 0;
     }
-    #preloader .preloader-curtain {
-      position: absolute; inset: 0; z-index: 3;
-      background: var(--peach);
-      transform: scaleY(0);
-      transform-origin: center center;
+    #preloader .preloader-brand img { width: 100%; height: auto; display: block; }
+    #preloader::before {
+      content: ""; position: fixed; inset: 0; z-index: 5; pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(255,255,255,0.018) 2px, rgba(255,255,255,0.018) 4px
+      );
+    }
+    #preloader .preloader-progress {
+      margin-top: clamp(16px, 3.5vw, 24px);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      opacity: 0;
+    }
+    #preloader .preloader-progress-frame {
+      display: flex; align-items: center; gap: clamp(5px, 1vw, 8px);
+    }
+    #preloader .preloader-bracket {
+      font-family: "Space Mono", monospace; font-size: 11px; line-height: 1;
+      color: var(--peach); opacity: 0.65;
+      text-shadow: 0 0 8px rgba(232,168,156,0.45);
+    }
+    #preloader .preloader-segments {
+      display: flex; align-items: center; gap: 3px;
+    }
+    #preloader .preloader-seg {
+      width: clamp(6px, 1.1vw, 9px); height: clamp(9px, 1.6vw, 12px);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(232,168,156,0.12);
+      opacity: 0.35;
+    }
+    #preloader .preloader-seg.is-lit {
+      background: var(--peach); border-color: var(--peach); opacity: 1;
+      box-shadow: 0 0 8px rgba(232,168,156,0.55);
+    }
+    #preloader .preloader-pct {
+      font-family: "Space Mono", monospace; font-size: 10px;
+      letter-spacing: 0.14em; color: var(--peach);
+      text-shadow: 0 0 10px rgba(232,168,156,0.4);
     }
 
     /* cursor */
@@ -638,20 +645,39 @@
 </head>
 <body class="preloading">
   <div id="preloader" aria-hidden="false">
-    <div class="preloader-inner">
-      <div class="preloader-logo"><img src="images/logo.png" alt="L_RAWOG_FX Studio"></div>
-      <div class="preloader-bars">
-        <span class="preloader-bar"></span>
-        <span class="preloader-bar"></span>
-        <span class="preloader-bar"></span>
+    <div class="preloader-cover-top"></div>
+    <div class="preloader-cover-bottom"></div>
+    <div class="preloader-brand">
+      <img src="images/logo.png" alt="L_RAWOG_FX Studio">
+      <div class="preloader-progress" aria-hidden="true">
+        <div class="preloader-progress-frame">
+          <span class="preloader-bracket">[</span>
+          <div class="preloader-segments">
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+            <span class="preloader-seg"></span>
+          </div>
+          <span class="preloader-bracket">]</span>
+        </div>
+        <div class="preloader-pct">00%</div>
       </div>
-      <div class="preloader-brand">
-        <span class="preloader-left">L RAWOG</span>
-        <span class="preloader-right">FX STUDIO</span>
-      </div>
-      <span class="preloader-tag">Cinematic Visuals</span>
     </div>
-    <div class="preloader-curtain"></div>
   </div>
 
   <div id="cursor-dot"></div>
@@ -848,27 +874,62 @@
         document.body.classList.remove("preloading");
         return;
       }
-      const bars = preloader.querySelectorAll(".preloader-bar");
-      const left = preloader.querySelector(".preloader-left");
-      const right = preloader.querySelector(".preloader-right");
-      const logo = preloader.querySelector(".preloader-logo");
-      const tag = preloader.querySelector(".preloader-tag");
-      const curtain = preloader.querySelector(".preloader-curtain");
+      const brand = preloader.querySelector(".preloader-brand");
+      const img = brand.querySelector("img");
+      const progress = brand.querySelector(".preloader-progress");
+      const segments = brand.querySelectorAll(".preloader-seg");
+      const pctEl = brand.querySelector(".preloader-pct");
+      const coverTop = preloader.querySelector(".preloader-cover-top");
+      const coverBottom = preloader.querySelector(".preloader-cover-bottom");
+      const segCount = segments.length;
+      const counter = { val: 0 };
 
       const finish = () => {
         preloader.remove();
         document.body.classList.remove("preloading");
       };
 
-      const tl = gsap.timeline({ defaults: { ease: "power3.inOut" } });
-      tl.to(logo, { opacity: 1, duration: 0.75 })
-        .to(bars, { scaleX: 1, duration: 0.85, stagger: 0.14 }, "-=0.2")
-        .to(left, { y: 0, duration: 1, ease: "power4.out" }, "-=0.15")
-        .to(right, { y: 0, duration: 1, ease: "power4.out" }, "<")
-        .to(tag, { opacity: 1, duration: 0.6 }, "-=0.4")
-        .to({}, { duration: 0.55 })
-        .to(curtain, { scaleY: 1, duration: 0.95, ease: "power4.inOut" })
-        .to(preloader, { opacity: 0, duration: 0.55, ease: "power2.inOut", onComplete: finish }, "-=0.1");
+      const positionCoversAtLogoLine = () => {
+        const rect = img.getBoundingClientRect();
+        const lineY = rect.top + rect.height * 0.585;
+        coverTop.style.height = lineY + "px";
+        coverTop.style.top = "0";
+        coverBottom.style.top = lineY + "px";
+        coverBottom.style.bottom = "0";
+        return lineY;
+      };
+
+      const syncProgress = () => {
+        const pct = Math.min(100, Math.round(counter.val));
+        pctEl.textContent = String(pct).padStart(2, "0") + "%";
+        const lit = Math.floor((pct / 100) * segCount);
+        segments.forEach((seg, i) => seg.classList.toggle("is-lit", i < lit));
+      };
+
+      const run = () => {
+        gsap.set(brand, { xPercent: -50, yPercent: -50 });
+        positionCoversAtLogoLine();
+
+        const loadDuration = 3.6;
+        const tl = gsap.timeline({ defaults: { ease: "power3.inOut" } });
+        tl.fromTo(brand, { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 1.2, ease: "power3.out" })
+          .fromTo(progress, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "-=0.55")
+          .to(counter, {
+            val: 100,
+            duration: loadDuration,
+            ease: "power1.inOut",
+            onUpdate: syncProgress
+          }, "-=0.2")
+          .to({}, { duration: 0.7 })
+          .add(() => positionCoversAtLogoLine())
+          .to(brand, { opacity: 0, duration: 0.5 }, "<0.05")
+          .to(coverTop, { yPercent: -100, duration: 1.4, ease: "power4.inOut" }, "<")
+          .to(coverBottom, { yPercent: 100, duration: 1.4, ease: "power4.inOut" }, "<")
+          .add(finish);
+      };
+
+      if (img.complete) run();
+      else img.addEventListener("load", run, { once: true });
     })();
 
     /* ── CURSOR ── */
