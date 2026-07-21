@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>L_RAWOG_FX — Rakesh Dontula</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <meta name="theme-color" content="#0a0909">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -29,6 +32,54 @@
     body, body * { cursor: none !important; }
     a { color: inherit; text-decoration: none; }
     img, video { display: block; max-width: 100%; }
+    body.preloading { overflow: hidden; }
+
+    /* studio pre-loader */
+    #preloader {
+      position: fixed; inset: 0; z-index: 20000;
+      background: var(--bg); display: grid; place-items: center;
+      overflow: hidden;
+    }
+    #preloader .preloader-inner {
+      position: relative; z-index: 2; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 28px;
+    }
+    #preloader .preloader-logo {
+      width: clamp(72px, 14vw, 110px); opacity: 0;
+    }
+    #preloader .preloader-logo img { width: 100%; height: auto; margin: 0 auto; }
+    #preloader .preloader-bars {
+      display: flex; flex-direction: column; gap: 7px;
+      width: min(300px, 72vw);
+    }
+    #preloader .preloader-bar {
+      height: 2px; background: var(--peach); transform: scaleX(0);
+      transform-origin: left center;
+    }
+    #preloader .preloader-bar:nth-child(2) { transform-origin: right center; }
+    #preloader .preloader-brand {
+      display: flex; align-items: center; justify-content: center;
+      gap: clamp(10px, 2vw, 18px); overflow: hidden;
+      font-family: "DM Serif Display", serif;
+      font-size: clamp(1.8rem, 5.5vw, 3.6rem);
+      letter-spacing: .06em; line-height: 1; color: var(--cream);
+    }
+    #preloader .preloader-left,
+    #preloader .preloader-right {
+      display: block; transform: translateY(120%);
+    }
+    #preloader .preloader-right { color: var(--peach); font-style: italic; }
+    #preloader .preloader-tag {
+      font-family: "Space Mono", monospace; font-size: 9px;
+      letter-spacing: .32em; text-transform: uppercase; color: var(--muted);
+      opacity: 0;
+    }
+    #preloader .preloader-curtain {
+      position: absolute; inset: 0; z-index: 3;
+      background: var(--peach);
+      transform: scaleY(0);
+      transform-origin: center center;
+    }
 
     /* cursor */
     #cursor-dot, #cursor-ring, #cursor-label {
@@ -585,7 +636,24 @@
     }
   </style>
 </head>
-<body>
+<body class="preloading">
+  <div id="preloader" aria-hidden="false">
+    <div class="preloader-inner">
+      <div class="preloader-logo"><img src="images/logo.png" alt="L_RAWOG_FX Studio"></div>
+      <div class="preloader-bars">
+        <span class="preloader-bar"></span>
+        <span class="preloader-bar"></span>
+        <span class="preloader-bar"></span>
+      </div>
+      <div class="preloader-brand">
+        <span class="preloader-left">L RAWOG</span>
+        <span class="preloader-right">FX STUDIO</span>
+      </div>
+      <span class="preloader-tag">Cinematic Visuals</span>
+    </div>
+    <div class="preloader-curtain"></div>
+  </div>
+
   <div id="cursor-dot"></div>
   <div id="cursor-ring"></div>
   <div id="cursor-label">PLAY</div>
@@ -770,6 +838,38 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger);
+
+    /* ── STUDIO PRE-LOADER ── */
+    (function initPreloader() {
+      const preloader = document.getElementById("preloader");
+      if (!preloader) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        preloader.remove();
+        document.body.classList.remove("preloading");
+        return;
+      }
+      const bars = preloader.querySelectorAll(".preloader-bar");
+      const left = preloader.querySelector(".preloader-left");
+      const right = preloader.querySelector(".preloader-right");
+      const logo = preloader.querySelector(".preloader-logo");
+      const tag = preloader.querySelector(".preloader-tag");
+      const curtain = preloader.querySelector(".preloader-curtain");
+
+      const finish = () => {
+        preloader.remove();
+        document.body.classList.remove("preloading");
+      };
+
+      const tl = gsap.timeline({ defaults: { ease: "power3.inOut" } });
+      tl.to(logo, { opacity: 1, duration: 0.75 })
+        .to(bars, { scaleX: 1, duration: 0.85, stagger: 0.14 }, "-=0.2")
+        .to(left, { y: 0, duration: 1, ease: "power4.out" }, "-=0.15")
+        .to(right, { y: 0, duration: 1, ease: "power4.out" }, "<")
+        .to(tag, { opacity: 1, duration: 0.6 }, "-=0.4")
+        .to({}, { duration: 0.55 })
+        .to(curtain, { scaleY: 1, duration: 0.95, ease: "power4.inOut" })
+        .to(preloader, { opacity: 0, duration: 0.55, ease: "power2.inOut", onComplete: finish }, "-=0.1");
+    })();
 
     /* ── CURSOR ── */
     const dot = document.getElementById("cursor-dot");
