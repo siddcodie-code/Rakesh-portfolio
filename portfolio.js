@@ -10,14 +10,12 @@ const PORTFOLIO_CATEGORIES = [
     videos: [
       { id: "mf1", title: "AAKHARI PRAYANAM", year: "2024", youtubeId: "S-HUNgsKFgk", isShort: false },
       { id: "mf2", title: "Raava Naatho", year: "2024", youtubeId: "7Zo0dAcWRas", isShort: false },
-      { id: "mf3", title: "GNYANA PADAM", year: "2024", youtubeId: "0-q3Kj_IOfY", isShort: false },
       { id: "mf4", title: "StreetViolater", year: "2024", youtubeId: "gs4qOBaCyzs", isShort: false },
       { id: "mf5", title: "BadVibesssss", year: "2024", youtubeId: "fKtwEqhca04", isShort: false },
       { id: "mf6", title: "Antha Anukunna", year: "2024", youtubeId: "q_KzCmJqfV0", isShort: false },
       { id: "mf7", title: "Neninthe", year: "2024", instagramId: "DXeAiC9gje-", isShort: true },
       { id: "mf8", title: "Best Pre Wedding", year: "2024", youtubeId: "M4hgeJp6UJk", isShort: false },
       { id: "mf9", title: "Shashidhar X Vijaya Pre Wedding", year: "2024", youtubeId: "cp5IgSNAFHo", isShort: false },
-      { id: "mf10", title: "B. R. Ambedkar", year: "2024", youtubeId: "aIXPguTG9wM", isShort: false },
       { id: "mf11", title: "JAGGA JATT", year: "2024", youtubeId: "1zmneyBKTG4", isShort: false },
       { id: "mf12", title: "Elegance on wheels", year: "2024", youtubeId: "rXjAYcUTZPk", isShort: false },
       { id: "mf13", title: "IKKA", year: "2024", youtubeId: "1zmneyBKTG4", isShort: false },
@@ -35,7 +33,10 @@ const PORTFOLIO_CATEGORIES = [
     gradient: "linear-gradient(145deg, #2a2820 0%, #12100c 100%)",
     videos: [
       { id: "f1", title: "We Are Livin' The Dream", year: "2024", youtubeId: "NSalYzMR4Iw", isShort: false },
-      { id: "f2", title: "Ek Kursi 🪑", year: "2024", youtubeId: "PjEpqkuByAQ", isShort: false }
+      { id: "f2", title: "Ek Kursi 🪑", year: "2024", youtubeId: "PjEpqkuByAQ", isShort: false },
+      { id: "f3", title: "B. R. Ambedkar", year: "2024", youtubeId: "aIXPguTG9wM", isShort: false },
+      { id: "f4", title: "Nikon | Red Z Cinema", year: "2024", youtubeId: "UTJrAOkQLN0", isShort: false },
+      { id: "f5", title: "Jai Jagannath", year: "2024", youtubeId: "GcXI4G75IwI", isShort: false }
     ]
   },
   {
@@ -45,8 +46,9 @@ const PORTFOLIO_CATEGORIES = [
     accent: "#a8e8dc",
     gradient: "linear-gradient(145deg, #183028 0%, #081210 100%)",
     videos: [
-      { id: "di1", title: "When light becomes the storyteller", year: "2024", youtubeId: "emFXJYA8ryY", isShort: false },
-      { id: "di2", title: "AAKHARI PRAYANAM", year: "2024", youtubeId: "rTYTMoGKcLQ", isShort: false }
+      { id: "di2", title: "AAKHARI PRAYANAM", year: "2024", youtubeId: "rTYTMoGKcLQ", isShort: false },
+      { id: "di3", title: "GNYANA PADAM", year: "2024", youtubeId: "0-q3Kj_IOfY", isShort: false },
+      { id: "di4", title: "Raava Natho Grade Breakdown", year: "2024", youtubeId: "WOrdqfrRmxU", isShort: false }
     ]
   },
   {
@@ -117,7 +119,8 @@ const PORTFOLIO_CATEGORIES = [
     gradient: "linear-gradient(145deg, #1a2038 0%, #0c1018 100%)",
     videos: [
       { id: "vc1", title: "Creative Stuff VFX", year: "2024", youtubeId: "CxHN6YxKOL4", isShort: true },
-      { id: "vc2", title: "Clone Glow Split", year: "2024", youtubeId: "q8Z3GajPxKg", isShort: false }
+      { id: "vc2", title: "Clone Glow Split", year: "2024", youtubeId: "q8Z3GajPxKg", isShort: false },
+      { id: "vc3", title: "When light becomes the storyteller", year: "2024", youtubeId: "emFXJYA8ryY", isShort: false }
     ]
   },
   {
