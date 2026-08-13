@@ -543,7 +543,7 @@
     }
     .film-rows { flex: 1; overflow-y: auto; display: flex; flex-direction: column; padding-right: 4px; }
     .film-row {
-      display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 14px;
+      display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 14px;
       padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.12);
       cursor: none; transition: .2s;
     }
@@ -554,9 +554,6 @@
       font-size: 10px; color: var(--cream); flex-shrink: 0;
     }
     .film-row .film-name { font-size: clamp(15px, 1.4vw, 17px); font-weight: 500; letter-spacing: .01em; }
-    .film-row .film-year {
-      font-family: "Space Mono", monospace; font-size: 11px; color: var(--muted); letter-spacing: .1em;
-    }
     .panel-count {
       align-self: flex-end; margin-top: 16px;
       font-family: "Space Mono", monospace; font-size: 10px; letter-spacing: .16em;
@@ -1079,7 +1076,6 @@
           <div class="film-row" data-vid="${v.id}" data-cat="${cat.id}">
             <span class="play-btn">▶</span>
             <span class="film-name">${v.title}</span>
-            <span class="film-year">${v.year || "2024"}</span>
           </div>`).join("");
 
         panel.innerHTML = `
