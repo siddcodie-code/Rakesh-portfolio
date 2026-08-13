@@ -10,6 +10,7 @@ const PORTFOLIO_CATEGORIES = [
     videos: [
       { id: "mf1", title: "AAKHARI PRAYANAM", year: "2024", youtubeId: "S-HUNgsKFgk", isShort: false },
       { id: "mf2", title: "Raava Naatho", year: "2024", youtubeId: "7Zo0dAcWRas", isShort: false },
+      { id: "mf3", title: "GNYANA PADAM", year: "2025", youtubeId: "Cc4o2e1dO2I", isShort: false },
       { id: "mf4", title: "StreetViolater", year: "2024", youtubeId: "gs4qOBaCyzs", isShort: false },
       { id: "mf5", title: "BadVibesssss", year: "2024", youtubeId: "fKtwEqhca04", isShort: false },
       { id: "mf6", title: "Antha Anukunna", year: "2024", youtubeId: "q_KzCmJqfV0", isShort: false },
